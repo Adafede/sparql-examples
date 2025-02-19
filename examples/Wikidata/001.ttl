@@ -1,3 +1,7 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
 @prefix wd: <http://www.wikidata.org/entity/> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
@@ -32,10 +36,3 @@ SELECT DISTINCT ?structure ?structure_smiles WHERE {
     dc:creator "Adriano Rutz" ;
     dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
     schema:keywords "retraction" .
-
-@prefix ex: <https://bigcat-um.github.io/sparql-examples/AOP-Wiki/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema: <https://schema.org/> .
-@prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix dc: <http://purl.org/dc/elements/1.1/> .
