@@ -36,4 +36,4 @@ SELECT DISTINCT ?structure ?structure_smiles WHERE {
     spex:federatesWith <http://wikiba.se/ontology#label> ;
     dc:creator "Adriano Rutz" ;
     dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
-    schema:keywords "retraction" .
+    schema:keywords "chemicals", "antibiotics" .
