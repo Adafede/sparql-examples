@@ -16,7 +16,7 @@ PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 SELECT DISTINCT ?structure ?structure_smiles WHERE {
     VALUES ?disease {
         wd:Q55789782   # Gram-positive
-    # wd:Q19597369 # Gram-negative
+        # wd:Q19597369 # Gram-negative
     }
     ?infection (wdt:P279*) ?disease.
     { ?structure wdt:P2175 ?infection. }
@@ -27,6 +27,6 @@ SELECT DISTINCT ?structure ?structure_smiles WHERE {
 """;
 schema:target <https://query.wikidata.org/sparql> ;
 spex:federatesWith <http://wikiba.se/ontology#label> ;
-dc:creator "Adriano Rutz" ;
 dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
-schema:keywords "chemicals", "antibiotics" .
+schema:keywords "chemicals", "antibiotics" ;
+dc:creator "Adriano Rutz" .
