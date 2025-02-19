@@ -6,18 +6,10 @@
 @prefix wd: <http://www.wikidata.org/entity/> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
-ex:001 a sh:SPARQLExecutable,
-       sh:SPARQLSelectExecutable ;
-    rdfs:comment "Chemicals treating Gram-positive infections."@en ;
-    sh:prefixes _:sparql_examples_prefixes ;
-    sh:select """#+ summary: Chemicals treating Gram-positive infections
-#+ description: What are the chemicals known to treat gram-positive infections (Q55789782)?
-#+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
-#+ pagination: 100
-#+ method: GET
-#+ tags:
-#+   - Chemicals
-
+ex:001 a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+rdfs:comment "Chemicals treating Gram-positive infections."@en ;
+sh:prefixes _:sparql_examples_prefixes ;
+sh:select """
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 #title: What are the chemicals known to treat gram-positive infections (Q55789782)?
@@ -31,9 +23,10 @@ SELECT DISTINCT ?structure ?structure_smiles WHERE {
     UNION
     { ?infection wdt:P2176 ?structure. }
     ?structure wdt:P233 ?structure_smiles.
-}""";
-    schema:target <https://query.wikidata.org/sparql> ;
-    spex:federatesWith <http://wikiba.se/ontology#label> ;
-    dc:creator "Adriano Rutz" ;
-    dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
-    schema:keywords "chemicals", "antibiotics" .
+}
+""";
+schema:target <https://query.wikidata.org/sparql> ;
+spex:federatesWith <http://wikiba.se/ontology#label> ;
+dc:creator "Adriano Rutz" ;
+dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+schema:keywords "chemicals", "antibiotics" .
