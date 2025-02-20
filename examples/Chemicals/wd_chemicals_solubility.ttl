@@ -1,4 +1,4 @@
-PREFIX bd: <http://www.bigdata.com/rdf#> .
+@prefix bd: <http://www.bigdata.com/rdf#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix ex: <https://adafede.github.io/sparql-examples/Chemicals/> .
 @prefix hint: <http://www.bigdata.com/queryHints#> .
