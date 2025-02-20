@@ -7,7 +7,7 @@
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 @prefix wikibase: <http://wikiba.se/ontology#> .
 
-ex:wd_articles_topic a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+ex:wd_authors_expertise a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
 rdfs:comment "Authors (females) with expertise in proteomics and computational biology."@en ;
 sh:prefixes _:sparql_examples_prefixes ;
 sh:select """
