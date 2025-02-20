@@ -1,11 +1,11 @@
 # SPARQL examples
 
-We collect the SPARQL examples in different formats,
-for different projects where we have a public SPARQL endpoint.
+This repository provides a collection of SPARQL query examples in various formats, tailored for different projects with publicly available SPARQL endpoints.
 
-In this GitHub pages we have a HTML rendering for a growing number of them.
+We continuously expand this collection to highlight diverse use cases, including:
 
 * [Chemicals](./examples/Chemicals/)
+* [Maintenance](./examples/Maintenance/)
 * [Omics](./examples/Omics/)
 * [Scholarly](./examples/Scholarly/)
 * [Taxa](./examples/Taxa/)
