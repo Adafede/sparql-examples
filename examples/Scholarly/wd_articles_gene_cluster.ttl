@@ -1,16 +1,21 @@
 @prefix bd: <http://www.bigdata.com/rdf#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
-@prefix ex: <https://adafede.github.io/sparql-examples/Wikidata/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/Scholarly/> .
+@prefix hint: <http://www.bigdata.com/queryHints#> .
 @prefix mwapi: <https://www.mediawiki.org/ontology#API/> .
 @prefix p: <http://www.wikidata.org/prop/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 @prefix wikibase: <http://wikiba.se/ontology#> .
 
-ex:wd_articles_topic a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
-rdfs:comment "Scholarly articles containing 'quassin' (Q2079986) in title."@en ;
+ex:wd_articles_gene_cluster a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+rdfs:comment "Scholarly articles containing 'gene cluster' and found in taxon."@en ;
 sh:prefixes _:sparql_examples_prefixes ;
 sh:select """
 PREFIX mwapi: <https://www.mediawiki.org/ontology#API/>
@@ -18,21 +23,26 @@ PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wikibase: <http://wikiba.se/ontology#>
 PREFIX p: <http://www.wikidata.org/prop/>
 PREFIX bd: <http://www.bigdata.com/rdf#>
-#title: Scholarly articles containing 'quassin' (Q2079986) in title
-SELECT ?article ?article_title WHERE {
+PREFIX pr: <http://www.wikidata.org/prop/reference/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX hint: <http://www.bigdata.com/queryHints#>
+#title: Scholarly articles containing 'gene cluster' (Q1501261) and NPs
+SELECT DISTINCT ?article ?article_doi ?article_title WHERE {
     SERVICE wikibase:mwapi {
         bd:serviceParam wikibase:endpoint "www.wikidata.org";
         wikibase:api "Search";
-        mwapi:srsearch "quassin haswbstatement:P31=Q13442814 -haswbstatement:P921=Q2079986";
+        mwapi:srsearch "gene cluster haswbstatement:P31=Q13442814";
         mwapi:srlimit "max".
         ?article wikibase:apiOutputItem mwapi:title.
     }
+    ?article wdt:P356 ?article_doi.
     ?article wdt:P1476 ?article_title.
-    FILTER(CONTAINS(LCASE(STR(?article_title)), "quassin"))
+    ?s (p:P703/prov:wasDerivedFrom/pr:P248) ?article. hint:Prior hint:rangeSafe TRUE.
+    ?s p:P235 [].
 }
 """;
 schema:target <https://query.wikidata.org/sparql> ;
 spex:federatesWith <http://wikiba.se/ontology#label> ;
 dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
-schema:keywords "scholarly articles" ;
+schema:keywords "scholarly articles", "gene cluster" ;
 dc:creator "Adriano Rutz" .
