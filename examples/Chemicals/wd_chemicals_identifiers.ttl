@@ -1,0 +1,42 @@
+@prefix bd: <http://www.bigdata.com/rdf#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/Chemicals/> .
+@prefix hint: <http://www.bigdata.com/queryHints#> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+
+ex:wd_chemicals_identifiers a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+rdfs:comment "Most used external IDs for items with an InChIKey."@en ;
+sh:prefixes _:sparql_examples_prefixes ;
+sh:select """
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX hint: <http://www.bigdata.com/queryHints#>
+#title:Most used external IDs for items with an InChIKey (P235)
+SELECT ?p ?propLabel (COUNT(?item) AS ?count) WHERE {
+    SERVICE bd:sample {
+        ?item p:P235 [].
+        bd:serviceParam bd:sample.limit 10000 .
+    }
+    hint:Prior hint:runFirst TRUE.
+    ?item ?p [].
+    hint:Prior hint:rangeSafe TRUE.
+    ?prop wikibase:directClaim ?p.
+    hint:Prior hint:rangeSafe TRUE.
+    ?prop wikibase:propertyType wikibase:ExternalId.
+    hint:Prior hint:rangeSafe TRUE.
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
+}
+GROUP BY ?p ?propLabel
+ORDER BY DESC (?count)
+""";
+schema:target <https://query.wikidata.org/sparql> ;
+spex:federatesWith <http://wikiba.se/ontology#label> ;
+dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+schema:keywords "chemicals", "identifiers" ;
+dc:creator "Adriano Rutz" .

@@ -6,6 +6,7 @@ for different projects where we have a public SPARQL endpoint.
 In this GitHub pages we have a HTML rendering for a growing number of them.
 
 * [Chemicals](./examples/Chemicals/)
+* [Omics](./examples/Omics/)
 * [Scholarly](./examples/Scholarly/)
 * [Taxa](./examples/Taxa/)
 
