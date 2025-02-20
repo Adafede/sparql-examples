@@ -9,7 +9,7 @@
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
 ex:wd_chemicals_classes a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
-rdfs:comment "Chemical classes taxonomy."@en ;
+rdfs:comment "Chemicals classes."@en ;
 sh:prefixes _:sparql_examples_prefixes ;
 sh:select """
 PREFIX wd: <http://www.wikidata.org/entity/>
