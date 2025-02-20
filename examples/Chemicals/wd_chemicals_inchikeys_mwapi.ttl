@@ -1,0 +1,37 @@
+@prefix bd: <http://www.bigdata.com/rdf#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/Chemicals/> .
+@prefix mwapi: <https://www.mediawiki.org/ontology#API/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+
+ex:wd_chemicals_inchikeys_mwapi a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+rdfs:comment "Which chemicals contain given short inchikey(s) (first layer of 14 characters)?"@en ;
+sh:prefixes _:sparql_examples_prefixes ;
+sh:select """
+PREFIX mwapi: <https://www.mediawiki.org/ontology#API/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+#title: Which chemicals contain given short inchikey(s) (first layer of 14 characters)?
+SELECT * WHERE {
+    VALUES ?inchikey {
+        "BUOYQGLRFDDTLB"
+        "IOSXSVZRTUWBHC"
+    }
+    SERVICE wikibase:mwapi {
+        bd:serviceParam wikibase:endpoint "www.wikidata.org";
+        wikibase:api "Search";
+        mwapi:srsearch ?inchikey.
+        ?item wikibase:apiOutput mwapi:title.
+    }
+}
+LIMIT 1000
+""";
+schema:target <https://query.wikidata.org/sparql> ;
+spex:federatesWith <http://wikiba.se/ontology#label> ;
+dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+schema:keywords "chemicals" ;
+dc:creator "Adriano Rutz" .
