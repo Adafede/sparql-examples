@@ -1,17 +1,17 @@
-@prefix dc: <https://purl.org/dc/elements/1.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix ex: <https://adafede.github.io/sparql-examples/Wikidata/> .
 @prefix schema: <https://schema.org/> .
-@prefix sh: <https://www.w3.org/ns/shacl#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
-@prefix wd: <https://www.wikidata.org/entity/> .
-@prefix wdt: <https://www.wikidata.org/prop/direct/> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
 ex:wd_chemicals_infection_grampos a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
 rdfs:comment "Chemicals treating Gram-positive infections."@en ;
 sh:prefixes _:sparql_examples_prefixes ;
 sh:select """
-PREFIX wd: <https://www.wikidata.org/entity/>
-PREFIX wdt: <https://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 #title: What are the chemicals known to treat gram-positive infections (Q55789782)?
 SELECT DISTINCT ?structure ?structure_smiles WHERE {
     VALUES ?disease {
@@ -26,7 +26,7 @@ SELECT DISTINCT ?structure ?structure_smiles WHERE {
 }
 """;
 schema:target <https://query.wikidata.org/sparql> ;
-spex:federatesWith <https://wikiba.se/ontology#label> ;
+spex:federatesWith <http://wikiba.se/ontology#label> ;
 dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
 schema:keywords "chemicals", "antibiotics" ;
 dc:creator "Adriano Rutz" .
