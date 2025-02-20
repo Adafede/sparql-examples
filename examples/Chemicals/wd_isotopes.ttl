@@ -1,0 +1,26 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/Chemicals/> .
+@prefix hint: <http://www.bigdata.com/queryHints#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+
+ex:wd_isotopes a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+rdfs:comment "Which structures are isotopically-labeled ones?"@en ;
+sh:prefixes _:sparql_examples_prefixes ;
+sh:select """
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX hint: <http://www.bigdata.com/queryHints#>
+#title: Which structures are isotopically-labeled ones?
+SELECT ?structure WHERE {
+    ?structure wdt:P234 ?inchi. hint:Prior hint:rangeSafe TRUE.
+    FILTER(REGEX(STR(?inchi), "/i"))
+}
+""";
+schema:target <https://query.wikidata.org/sparql> ;
+spex:federatesWith <http://wikiba.se/ontology#label> ;
+dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+schema:keywords "chemicals", "isotopes" ;
+dc:creator "Adriano Rutz" .

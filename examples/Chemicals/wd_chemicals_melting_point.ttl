@@ -1,0 +1,38 @@
+PREFIX bd: <http://www.bigdata.com/rdf#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/Chemicals/> .
+@prefix hint: <http://www.bigdata.com/queryHints#> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+
+ex:wd_chemicals_melting_point a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+rdfs:comment "Chemicals with melting point and their units."@en ;
+sh:prefixes _:sparql_examples_prefixes ;
+sh:select """
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+PREFIX psv: <http://www.wikidata.org/prop/statement/value/>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+#title: Chemicals with melting point and their units.
+SELECT ?item ?inchikey ?melting_point ?unit ?unitLabel WHERE {
+    ?item wdt:P235 ?inchikey.
+    ?item p:P2101 ?statement.
+    ?statement ps:P2101 ?melting_point.
+    ?statement psv:P2101/wikibase:quantityUnit ?unit.
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
+}
+""";
+schema:target <https://query.wikidata.org/sparql> ;
+spex:federatesWith <http://wikiba.se/ontology#label> ;
+dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+schema:keywords "chemicals" ;
+dc:creator "Adriano Rutz" .
