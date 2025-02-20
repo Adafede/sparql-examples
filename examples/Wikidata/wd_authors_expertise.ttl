@@ -1,0 +1,43 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/Wikidata/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+
+ex:wd_articles_topic a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+rdfs:comment "Authors (females) with expertise in proteomics and computational biology."@en ;
+sh:prefixes _:sparql_examples_prefixes ;
+sh:select """
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+#title: Authors (females (Q6581072)) with expertise in proteomics (Q471857) and computational biology (Q177005)
+SELECT ?author ?authorLabel ?works ?awards WHERE {
+    {
+        SELECT DISTINCT ?author ?authorLabel (COUNT(DISTINCT ?output) AS ?works) (COUNT(DISTINCT ?award) AS ?awards) WHERE {
+            {
+                SELECT DISTINCT * WHERE {
+                    { ?author (^wdt:P50/wdt:P921) wd:Q471857, wd:Q177005. }
+                    UNION
+                    { ?author wdt:P101 wd:Q471857, wd:Q177005.}
+                    ?author wdt:P21 wd:Q6581072;
+                    rdfs:label ?authorLabel.
+                    FILTER((LANG(?authorLabel)) = "en")
+                }
+            }
+            OPTIONAL { ?author wdt:P166 ?award. }
+            OPTIONAL { ?author ^wdt:P50 ?output. }
+        }
+        GROUP BY ?author ?authorLabel
+    }
+}
+ORDER BY DESC (?works) DESC (?awards) DESC (?count)
+""";
+schema:target <https://query.wikidata.org/sparql> ;
+spex:federatesWith <http://wikiba.se/ontology#label> ;
+dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+schema:keywords "authors" ;
+dc:creator "Adriano Rutz" .
