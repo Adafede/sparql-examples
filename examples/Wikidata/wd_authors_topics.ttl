@@ -1,0 +1,108 @@
+@prefix bd: <http://www.bigdata.com/rdf#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/Wikidata/> .
+@prefix hint: <http://www.bigdata.com/queryHints#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+
+ex:wd_articles_gene_cluster a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+rdfs:comment "Scholarly articles containing 'gene cluster' and found in taxon."@en ;
+sh:prefixes _:sparql_examples_prefixes ;
+sh:select """
+#+ summary: Author's topic of expertise
+#+ description: Author's topic of expertise
+#+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
+#+ pagination: 100
+#+ method: GET
+#+ tags:
+#+   - Authors
+
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX hint: <http://www.bigdata.com/queryHints#>
+#defaultView:BubbleChart
+PREFIX target: <http://www.wikidata.org/entity/Q97455964>
+SELECT ?score ?topic ?topicLabel WHERE {
+    {
+        SELECT (SUM(?score_) AS ?score) ?topic
+        WHERE {
+            {
+                SELECT (64 AS ?score_) ?topic WHERE {
+                    target: wdt:P101 ?topic .
+                }
+            }
+            UNION
+            {
+                SELECT (16 AS ?score_) ?topic WHERE {
+                    target: wdt:P101/wdt:P279 ?topic .
+                }
+            }
+            UNION
+            {
+                SELECT (4 AS ?score_) ?topic WHERE {
+                    target: wdt:P101/wdt:P279/wdt:P279 ?topic .
+                }
+            }
+            UNION
+            {
+                SELECT (32 AS ?score_) ?topic WHERE {
+                    ?work wdt:P50 target: ;
+                    wdt:P921 ?topic .
+                }
+            }
+            UNION
+            {
+                SELECT (8 AS ?score_) ?topic WHERE {
+                    ?work wdt:P50 target: ;
+                    wdt:P921/wdt:P279 ?topic .
+                }
+            }
+            UNION
+            {
+                SELECT (2 AS ?score_) ?topic WHERE {
+                    ?work wdt:P50 target: ;
+                    wdt:P921/wdt:P279/wdt:P279 ?topic .
+                }
+            }
+            UNION
+            {
+                SELECT (8 AS ?score_) ?topic WHERE {
+                    ?work wdt:P50 target: .
+                    ?citing_work wdt:P2860 ?work ;
+                    wdt:P921 ?topic .
+                }
+            }
+            UNION
+            {
+                SELECT (4 AS ?score_) ?topic WHERE {
+                    ?work wdt:P50 target: .
+                    ?citing_work wdt:P2860 ?work ;
+                    wdt:P921/wdt:P279 ?topic .
+                }
+            }
+            UNION
+            {
+                SELECT (1 AS ?score_) ?topic WHERE {
+                    ?work wdt:P50 target: .
+                    ?citing_work wdt:P2860 ?work ;
+                    wdt:P921/wdt:P279/wdt:P279 ?topic .
+                }
+            }
+            hint:Prior hint:rangeSafe TRUE.
+        }
+        GROUP BY ?topic
+    }
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
+}
+ORDER BY DESC(?score)
+LIMIT 15
+""";
+schema:target <https://query.wikidata.org/sparql> ;
+spex:federatesWith <http://wikiba.se/ontology#label> ;
+dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+schema:keywords "authors" ;
+dc:creator "Adriano Rutz" .

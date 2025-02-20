@@ -43,5 +43,5 @@ SELECT DISTINCT ?article ?article_doi ?article_title WHERE {
 schema:target <https://query.wikidata.org/sparql> ;
 spex:federatesWith <http://wikiba.se/ontology#label> ;
 dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
-schema:keywords "Scholarly articles", "gene cluster" ;
+schema:keywords "scholarly articles", "gene cluster" ;
 dc:creator "Adriano Rutz" .
