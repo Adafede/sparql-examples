@@ -8,6 +8,7 @@
 @prefix prov: <https://www.w3.org/ns/prov#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <https://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
 @prefix wd: <https://www.wikidata.org/entity/> .
 @prefix wdt: <https://www.wikidata.org/prop/direct/> .
 @prefix wikibase: <https://wikiba.se/ontology#> .
@@ -40,6 +41,7 @@ SELECT DISTINCT ?article ?article_doi ?article_title WHERE {
 }
 """;
 schema:target <https://query.wikidata.org/sparql> ;
+spex:federatesWith <https://wikiba.se/ontology#label> ;
 dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
 schema:keywords "Scholarly articles", "gene cluster" ;
 dc:creator "Adriano Rutz" .
