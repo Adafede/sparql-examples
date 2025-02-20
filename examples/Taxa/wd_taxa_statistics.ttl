@@ -1,6 +1,6 @@
 @prefix bd: <http://www.bigdata.com/rdf#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
-@prefix ex: <https://adafede.github.io/sparql-examples/Chemicals/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/Taxa/> .
 @prefix hint: <http://www.bigdata.com/queryHints#> .
 @prefix mwapi: <https://www.mediawiki.org/ontology#API/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .

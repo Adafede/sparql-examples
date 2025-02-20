@@ -1,0 +1,41 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/Maintenance/> .
+@prefix hint: <http://www.bigdata.com/queryHints#> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+
+ex:wd_maintenance_inchikey_statements a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+rdfs:comment "Statements no longer valid because (none of) the InChIKey(s) of the item does not correspond to the InChIKey matched for the reference."@en ;
+sh:prefixes _:sparql_examples_prefixes ;
+sh:select """
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX pr: <http://www.wikidata.org/prop/reference/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX hint: <http://www.bigdata.com/queryHints#>
+#title: Statements no longer valid because (none of) the InChIKey(s) of the item does not correspond to the InChIKey matched for the reference.
+SELECT ?item ?statement ?inchikey_item ?inchikey_ref WHERE {
+    {
+        SELECT ?item ?statement (GROUP_CONCAT(?ii; SEPARATOR = " ") AS ?inchikey_item) ?inchikey_ref WHERE {
+            ?statement (prov:wasDerivedFrom/pr:P235) ?inchikey_ref.
+            hint:Prior hint:rangeSafe TRUE.
+            ?item ?p ?statement.
+            hint:Prior hint:rangeSafe TRUE.
+            ?item wdt:P235 ?ii.
+            hint:Prior hint:rangeSafe TRUE.
+        }
+        GROUP BY ?item ?statement ?inchikey_ref
+    }
+    FILTER (?inchikey_item != ?inchikey_ref)
+    FILTER (!REGEX(?inchikey_item, ?inchikey_ref))
+}
+""";
+schema:target <https://query.wikidata.org/sparql> ;
+spex:federatesWith <http://wikiba.se/ontology#label> ;
+dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+schema:keywords "maintenance", "chemicals" ;
+dc:creator "Adriano Rutz" .
