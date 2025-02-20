@@ -1,5 +1,5 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
-@prefix ex: <https://adafede.github.io/sparql-examples/Wikidata/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/Scholarly/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
