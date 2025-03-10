@@ -1,11 +1,10 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix ex: <https://adafede.github.io/sparql-examples/Scholarly/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
-@prefix wikibase: <http://wikiba.se/ontology#> .
 
 ex:wd_authors_expertise a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
 rdfs:comment "Authors (females) with expertise in proteomics and computational biology."@en ;
@@ -37,7 +36,6 @@ SELECT ?author ?authorLabel ?works ?awards WHERE {
 ORDER BY DESC (?works) DESC (?awards) DESC (?count)
 """;
 schema:target <https://query.wikidata.org/sparql> ;
-spex:federatesWith <http://wikiba.se/ontology#label> ;
 dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
 schema:keywords "authors" ;
 dc:creator "Adriano Rutz" .
