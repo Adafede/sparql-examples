@@ -24,13 +24,13 @@ SELECT ?p ?propLabel (COUNT(?item) AS ?count) WHERE {
         ?item p:P235 [].
         bd:serviceParam bd:sample.limit 10000 .
     }
-    hint:Prior hint:runFirst TRUE.
+    hint:Prior hint:runFirst true.
     ?item ?p [].
-    hint:Prior hint:rangeSafe TRUE.
+    hint:Prior hint:rangeSafe true.
     ?prop wikibase:directClaim ?p.
-    hint:Prior hint:rangeSafe TRUE.
+    hint:Prior hint:rangeSafe true.
     ?prop wikibase:propertyType wikibase:ExternalId.
-    hint:Prior hint:rangeSafe TRUE.
+    hint:Prior hint:rangeSafe true.
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
 }
 GROUP BY ?p ?propLabel

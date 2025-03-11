@@ -22,11 +22,11 @@ SELECT ?item ?statement ?inchikey_item ?inchikey_ref WHERE {
     {
         SELECT ?item ?statement (GROUP_CONCAT(?ii; SEPARATOR = " ") AS ?inchikey_item) ?inchikey_ref WHERE {
             ?statement (prov:wasDerivedFrom/pr:P235) ?inchikey_ref.
-            hint:Prior hint:rangeSafe TRUE.
+            hint:Prior hint:rangeSafe true.
             ?item ?p ?statement.
-            hint:Prior hint:rangeSafe TRUE.
+            hint:Prior hint:rangeSafe true.
             ?item wdt:P235 ?ii.
-            hint:Prior hint:rangeSafe TRUE.
+            hint:Prior hint:rangeSafe true.
         }
         GROUP BY ?item ?statement ?inchikey_ref
     }
