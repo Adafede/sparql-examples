@@ -86,7 +86,7 @@ SELECT ?score ?topic ?topicLabel WHERE {
                     wdt:P921/wdt:P279/wdt:P279 ?topic .
                 }
             }
-            hint:Prior hint:rangeSafe TRUE.
+            hint:Prior hint:rangeSafe true.
         }
         GROUP BY ?topic
     }

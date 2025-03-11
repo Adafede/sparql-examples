@@ -15,7 +15,7 @@ PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
 #title: Which structures are isotopically-labeled ones?
 SELECT ?structure WHERE {
-    ?structure wdt:P234 ?inchi. hint:Prior hint:rangeSafe TRUE.
+    ?structure wdt:P234 ?inchi. hint:Prior hint:rangeSafe true.
     FILTER(REGEX(STR(?inchi), "/i"))
 }
 """;
