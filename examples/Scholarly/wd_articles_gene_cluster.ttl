@@ -38,7 +38,7 @@ SELECT DISTINCT ?article ?article_doi ?article_title WHERE {
     }
     ?article wdt:P356 ?article_doi.
     ?article wdt:P1476 ?article_title.
-    ?s (p:P703/prov:wasDerivedFrom/pr:P248) ?article. hint:Prior hint:rangeSafe TRUE.
+    ?s (p:P703/prov:wasDerivedFrom/pr:P248) ?article. hint:Prior hint:rangeSafe true.
     ?s p:P235 [].
 }
 """;

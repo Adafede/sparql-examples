@@ -23,7 +23,7 @@ SELECT ?taxon (COUNT(DISTINCT ?g) AS ?genome) (COUNT(DISTINCT ?m) AS ?metabolome
                 wd:Q31856
             }
             ?taxon ^(wdt:P171*)/^wdt:P703 ?thing.
-            hint:Prior hint:rangeSafe TRUE.
+            hint:Prior hint:rangeSafe true.
         }
     }
     {
@@ -40,19 +40,19 @@ SELECT ?taxon (COUNT(DISTINCT ?g) AS ?genome) (COUNT(DISTINCT ?m) AS ?metabolome
             }
             {
                 ?thing wdt:P31 ?chemical.
-                hint:Prior hint:rangeSafe TRUE.
+                hint:Prior hint:rangeSafe true.
                 BIND(?thing AS ?m)
             }
             UNION
             {
                 ?thing wdt:P31 ?protein.
-                hint:Prior hint:rangeSafe TRUE.
+                hint:Prior hint:rangeSafe true.
                 BIND(?thing AS ?p)
             }
             UNION
             {
                 ?thing wdt:P31 ?gene.
-                hint:Prior hint:rangeSafe TRUE.
+                hint:Prior hint:rangeSafe true.
                 BIND(?thing AS ?g)
             }
         }

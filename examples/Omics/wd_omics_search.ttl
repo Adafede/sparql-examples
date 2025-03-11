@@ -23,9 +23,9 @@ SELECT ?taxon ?child (COUNT(DISTINCT ?g) AS ?genome) (COUNT(DISTINCT ?m) AS ?met
                 wd:Q31856
             }
             ?taxon ^(wdt:P171*) ?child.
-            hint:Prior hint:rangeSafe TRUE.
+            hint:Prior hint:rangeSafe true.
             ?child ^wdt:P703 ?thing.
-            hint:Prior hint:rangeSafe TRUE.
+            hint:Prior hint:rangeSafe true.
         }
     }
     {
@@ -42,19 +42,19 @@ SELECT ?taxon ?child (COUNT(DISTINCT ?g) AS ?genome) (COUNT(DISTINCT ?m) AS ?met
             }
             {
                 ?thing wdt:P31 ?chemical.
-                hint:Prior hint:rangeSafe TRUE.
+                hint:Prior hint:rangeSafe true.
                 BIND(?thing AS ?m)
             }
             UNION
             {
                 ?thing wdt:P31 ?protein.
-                hint:Prior hint:rangeSafe TRUE.
+                hint:Prior hint:rangeSafe true.
                 BIND(?thing AS ?p)
             }
             UNION
             {
                 ?thing wdt:P31 ?gene.
-                hint:Prior hint:rangeSafe TRUE.
+                hint:Prior hint:rangeSafe true.
                 BIND(?thing AS ?g)
             }
         }
