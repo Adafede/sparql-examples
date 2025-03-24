@@ -1,0 +1,38 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/Maintenance/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix hint: <http://www.bigdata.com/queryHints#> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+
+ex:wd_maintenance_orphan_chemicals a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+rdfs:comment "Maintenance. Add subclasses to orphan chemical entities."@en ;
+sh:prefixes _:sparql_examples_prefixes ;
+sh:select """
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX pr: <http://www.wikidata.org/prop/reference/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX hint: <http://www.bigdata.com/queryHints#>
+#title: Maintenance. Add subclasses to orphan chemical entities.
+SELECT DISTINCT (REPLACE(STR(?item), ".*Q", "Q") AS ?qid) ?P279 WHERE {
+  VALUES ?chemicals {
+    wd:Q113145171
+    wd:Q59199015
+  }
+  ?item wdt:P31 ?chemicals. hint:Prior hint:rangeSafe true.
+  OPTIONAL {
+    ?item p:P279 ?sub.
+  }
+  FILTER(!(BOUND(?sub)))
+  BIND("Q11173" AS ?P279)
+}
+# LIMIT 500000
+""";
+schema:target <https://query.wikidata.org/sparql> ;
+dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+schema:keywords "maintenance", "chemicals" ;
+dc:creator "Adriano Rutz" .
