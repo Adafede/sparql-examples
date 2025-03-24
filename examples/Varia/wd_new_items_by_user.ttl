@@ -6,6 +6,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
 @prefix bd: <http://www.bigdata.com/rdf#> .
+@prefix hint: <http://www.bigdata.com/queryHints#> .
 @prefix mwapi: <https://www.mediawiki.org/ontology#API/> .
 @prefix wikibase: <http://wikiba.se/ontology#> .
 
@@ -13,6 +14,10 @@ ex:wd_new_items_by_user a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
 rdfs:comment "New items by user."@en ;
 sh:prefixes _:sparql_examples_prefixes ;
 sh:select """
+PREFIX mwapi: <https://www.mediawiki.org/ontology#API/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX hint: <http://www.bigdata.com/queryHints#>
 #title: Latest itmes by a user 
 SELECT ?title ?titleLabel WHERE {
   hint:Query hint:optimizer "None".
@@ -32,7 +37,7 @@ SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,
 ORDER BY DESC(?title)
 """;
 schema:target <https://query.wikidata.org/sparql> ;
-spex:federatesWith <http://wikiba.se/ontology#mwapi> ;
+spex:federatesWith <http://wikiba.se/ontology#mwapi>, <http://wikiba.se/ontology#label> ;
 dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
 schema:keywords "newItems" ;
-dc:creator "Adriano Rutz" .
+dc:creator "Jan Ainali" .
