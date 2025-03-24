@@ -9,6 +9,7 @@ We continuously expand this collection to highlight diverse use cases, including
 * [Omics](./examples/Omics/)
 * [Scholarly](./examples/Scholarly/)
 * [Taxa](./examples/Taxa/)
+* [Varia](./examples/Varia/)
 
 This repository is based on the work by the [SIB Swiss Institute of Bioinformatics](https://www.sib.swiss/),
 and specifically [this repository](https://github.com/sib-swiss/sparql-examples).
