@@ -43,50 +43,62 @@ SELECT ?score ?topic ?topicLabel WHERE {
             }
             UNION
             {
-                SELECT (32 AS ?score_) ?topic WHERE {
-                    ?work wdt:P50 target: ;
-                    wdt:P921 ?topic .
+                SERVICE <https://query-scholarly.wikidata.org/sparql> {
+                    SELECT (32 AS ?score_) ?topic WHERE {
+                        ?work wdt:P50 target: ;
+                        wdt:P921 ?topic .
+                    }
                 }
             }
             UNION
             {
-                SELECT (8 AS ?score_) ?topic WHERE {
-                    ?work wdt:P50 target: ;
-                    wdt:P921/wdt:P279 ?topic .
+                SERVICE <https://query-scholarly.wikidata.org/sparql> {
+                    SELECT (8 AS ?score_) ?topic WHERE {
+                        ?work wdt:P50 target: ;
+                        wdt:P921/wdt:P279 ?topic .
+                    }
                 }
             }
             UNION
             {
-                SELECT (2 AS ?score_) ?topic WHERE {
-                    ?work wdt:P50 target: ;
-                    wdt:P921/wdt:P279/wdt:P279 ?topic .
+                SERVICE <https://query-scholarly.wikidata.org/sparql> {
+                    SELECT (2 AS ?score_) ?topic WHERE {
+                        ?work wdt:P50 target: ;
+                        wdt:P921/wdt:P279/wdt:P279 ?topic .
+                    }
                 }
             }
             UNION
             {
-                SELECT (8 AS ?score_) ?topic WHERE {
-                    ?work wdt:P50 target: .
-                    ?citing_work wdt:P2860 ?work ;
-                    wdt:P921 ?topic .
+                SERVICE <https://query-scholarly.wikidata.org/sparql> {
+                    SELECT (8 AS ?score_) ?topic WHERE {
+                        ?work wdt:P50 target: .
+                        ?citing_work wdt:P2860 ?work ;
+                        wdt:P921 ?topic .
+                    }
                 }
             }
             UNION
             {
-                SELECT (4 AS ?score_) ?topic WHERE {
-                    ?work wdt:P50 target: .
-                    ?citing_work wdt:P2860 ?work ;
-                    wdt:P921/wdt:P279 ?topic .
+                SERVICE <https://query-scholarly.wikidata.org/sparql> {
+                    SELECT (4 AS ?score_) ?topic WHERE {
+                        ?work wdt:P50 target: .
+                        ?citing_work wdt:P2860 ?work ;
+                        wdt:P921/wdt:P279 ?topic .
+                    }
                 }
             }
             UNION
             {
-                SELECT (1 AS ?score_) ?topic WHERE {
-                    ?work wdt:P50 target: .
-                    ?citing_work wdt:P2860 ?work ;
-                    wdt:P921/wdt:P279/wdt:P279 ?topic .
+                SERVICE <https://query-scholarly.wikidata.org/sparql> {
+                    SELECT (1 AS ?score_) ?topic WHERE {
+                        ?work wdt:P50 target: .
+                        ?citing_work wdt:P2860 ?work ;
+                        wdt:P921/wdt:P279/wdt:P279 ?topic .
+                    }
                 }
             }
-            hint:Prior hint:rangeSafe true.
+            hint:Prior hint:rangeSafe TRUE.
         }
         GROUP BY ?topic
     }
@@ -96,7 +108,7 @@ ORDER BY DESC(?score)
 LIMIT 15
 """;
 schema:target <https://query.wikidata.org/sparql> ;
-spex:federatesWith <http://wikiba.se/ontology#label> ;
+spex:federatesWith <https://query-scholarly.wikidata.org/sparql>, <http://wikiba.se/ontology#label> ;
 dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
 schema:keywords "authors" ;
 dc:creator "Adriano Rutz" .
