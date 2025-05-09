@@ -22,19 +22,19 @@ PREFIX p: <http://www.wikidata.org/prop/>
 PREFIX bd: <http://www.bigdata.com/rdf#>
 #title: Scholarly articles containing 'quassin' (Q2079986) in title
 SELECT ?article ?article_title WHERE {
-    SERVICE wikibase:mwapi {
-        bd:serviceParam wikibase:endpoint "www.wikidata.org";
-        wikibase:api "Search";
-        mwapi:srsearch "quassin haswbstatement:P31=Q13442814 -haswbstatement:P921=Q2079986";
-        mwapi:srlimit "max".
-        ?article wikibase:apiOutputItem mwapi:title.
-    }
-    ?article wdt:P1476 ?article_title.
-    FILTER(CONTAINS(LCASE(STR(?article_title)), "quassin"))
+  SERVICE wikibase:mwapi {
+    bd:serviceParam wikibase:endpoint "www.wikidata.org";
+      wikibase:api "Search";
+      mwapi:srsearch "quassin haswbstatement:P31=Q13442814 -haswbstatement:P921=Q2079986";
+      mwapi:srlimit "max".
+    ?article wikibase:apiOutputItem mwapi:title.
+  }
+  SERVICE <https://query-scholarly.wikidata.org/sparql> { ?article wdt:P1476 ?article_title. }
+  FILTER(CONTAINS(LCASE(STR(?article_title)), "quassin"))
 }
 """;
 schema:target <https://query.wikidata.org/sparql> ;
-spex:federatesWith <http://wikiba.se/ontology#mwapi> ;
+spex:federatesWith <https://query-scholarly.wikidata.org/sparql>, <http://wikiba.se/ontology#mwapi> ;
 dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
 schema:keywords "scholarly articles" ;
 dc:creator "Adriano Rutz" .
