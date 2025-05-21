@@ -21,91 +21,116 @@ PREFIX hint: <http://www.bigdata.com/queryHints#>
 #defaultView:BubbleChart
 PREFIX target: <http://www.wikidata.org/entity/Q97455964>
 SELECT ?score ?topic ?topicLabel WHERE {
-    {
-        SELECT (SUM(?score_) AS ?score) ?topic
-        WHERE {
-            {
-                SELECT (64 AS ?score_) ?topic WHERE {
-                    target: wdt:P101 ?topic .
-                }
-            }
-            UNION
-            {
-                SELECT (16 AS ?score_) ?topic WHERE {
-                    target: wdt:P101/wdt:P279 ?topic .
-                }
-            }
-            UNION
-            {
-                SELECT (4 AS ?score_) ?topic WHERE {
-                    target: wdt:P101/wdt:P279/wdt:P279 ?topic .
-                }
-            }
-            UNION
-            {
-                SERVICE <https://query-scholarly.wikidata.org/sparql> {
-                    SELECT (32 AS ?score_) ?topic WHERE {
-                        ?work wdt:P50 target: ;
-                        wdt:P921 ?topic .
-                    }
-                }
-            }
-            UNION
-            {
-                SERVICE <https://query-scholarly.wikidata.org/sparql> {
-                    SELECT (8 AS ?score_) ?topic WHERE {
-                        ?work wdt:P50 target: ;
-                        wdt:P921/wdt:P279 ?topic .
-                    }
-                }
-            }
-            UNION
-            {
-                SERVICE <https://query-scholarly.wikidata.org/sparql> {
-                    SELECT (2 AS ?score_) ?topic WHERE {
-                        ?work wdt:P50 target: ;
-                        wdt:P921/wdt:P279/wdt:P279 ?topic .
-                    }
-                }
-            }
-            UNION
-            {
-                SERVICE <https://query-scholarly.wikidata.org/sparql> {
-                    SELECT (8 AS ?score_) ?topic WHERE {
-                        ?work wdt:P50 target: .
-                        ?citing_work wdt:P2860 ?work ;
-                        wdt:P921 ?topic .
-                    }
-                }
-            }
-            UNION
-            {
-                SERVICE <https://query-scholarly.wikidata.org/sparql> {
-                    SELECT (4 AS ?score_) ?topic WHERE {
-                        ?work wdt:P50 target: .
-                        ?citing_work wdt:P2860 ?work ;
-                        wdt:P921/wdt:P279 ?topic .
-                    }
-                }
-            }
-            UNION
-            {
-                SERVICE <https://query-scholarly.wikidata.org/sparql> {
-                    SELECT (1 AS ?score_) ?topic WHERE {
-                        ?work wdt:P50 target: .
-                        ?citing_work wdt:P2860 ?work ;
-                        wdt:P921/wdt:P279/wdt:P279 ?topic .
-                    }
-                }
-            }
-            hint:Prior hint:rangeSafe TRUE.
+  {
+    SELECT (SUM(?score_) AS ?score) ?topic WHERE {
+      { SELECT (64  AS ?score_) ?topic WHERE { target: wdt:P101 ?topic. } }
+      UNION
+      { SELECT (32  AS ?score_) ?topic WHERE { target: (wdt:P101/wdt:P279) ?topic. } }
+      UNION
+      { SELECT (16  AS ?score_) ?topic WHERE { target: (wdt:P101/wdt:P279/wdt:P279) ?topic. } }
+      UNION
+      {
+        SERVICE <https://query-scholarly.wikidata.org/sparql> {
+          SELECT (32  AS ?score_) ?topic WHERE {
+            ?work wdt:P50 target:;
+              wdt:P921 ?topic.
+          }
         }
-        GROUP BY ?topic
+      }
+      UNION
+      {
+        SERVICE <https://query-scholarly.wikidata.org/sparql> {
+          SELECT (16  AS ?score_) ?topic WHERE {
+            ?work wdt:P50 target:;
+              (wdt:P921/wdt:P279) ?topic.
+          }
+        }
+      }
+      UNION
+      {
+        SERVICE <https://query-scholarly.wikidata.org/sparql> {
+          SELECT (8  AS ?score_) ?topic WHERE {
+            ?work wdt:P50 target:;
+              (wdt:P921/wdt:P279/wdt:P279) ?topic.
+          }
+        }
+      }
+      UNION
+      {
+        SERVICE <https://query-scholarly.wikidata.org/sparql> {
+          SELECT (16  AS ?score_) ?topic WHERE {
+            ?work wdt:P50 target:;
+              wdt:P4510 ?topic.
+          }
+        }
+      }
+      UNION
+      {
+        SERVICE <https://query-scholarly.wikidata.org/sparql> {
+          SELECT (8  AS ?score_) ?topic WHERE {
+            ?work wdt:P50 target:;
+              (wdt:P4510/wdt:P279) ?topic.
+          }
+        }
+      }
+      UNION
+      {
+        SERVICE <https://query-scholarly.wikidata.org/sparql> {
+          SELECT (4  AS ?score_) ?topic WHERE {
+            ?work wdt:P50 target:;
+              (wdt:P4510/wdt:P279/wdt:P279) ?topic.
+          }
+        }
+      }
+      UNION
+      {
+        SELECT (32  AS ?score_) ?topic WHERE {
+          ?work wdt:P50 target:;
+            wdt:P921 ?topic.
+        }
+      }
+      UNION
+      {
+        SELECT (16  AS ?score_) ?topic WHERE {
+          ?work wdt:P50 target:;
+            (wdt:P921/wdt:P279) ?topic.
+        }
+      }
+      UNION
+      {
+        SELECT (8  AS ?score_) ?topic WHERE {
+          ?work wdt:P50 target:;
+            (wdt:P921/wdt:P279/wdt:P279) ?topic.
+        }
+      }
+      UNION
+      {
+        SELECT (16  AS ?score_) ?topic WHERE {
+          ?work wdt:P50 target:;
+            wdt:P4510 ?topic.
+        }
+      }
+      UNION
+      {
+        SELECT (8  AS ?score_) ?topic WHERE {
+          ?work wdt:P50 target:;
+            (wdt:P4510/wdt:P279) ?topic.
+        }
+      }
+      UNION
+      {
+        SELECT (4  AS ?score_) ?topic WHERE {
+          ?work wdt:P50 target:;
+            (wdt:P4510/wdt:P279/wdt:P279) ?topic.
+        }
+      }
     }
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
+    GROUP BY ?topic
+  }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
 }
-ORDER BY DESC(?score)
-LIMIT 15
+ORDER BY DESC (?score)
+LIMIT 24
 """;
 schema:target <https://query.wikidata.org/sparql> ;
 spex:federatesWith <https://query-scholarly.wikidata.org/sparql>, <http://wikiba.se/ontology#label> ;
