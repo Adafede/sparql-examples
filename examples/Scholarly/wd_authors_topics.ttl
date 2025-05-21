@@ -130,7 +130,7 @@ SELECT ?score ?topic ?topicLabel WHERE {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
 }
 ORDER BY DESC (?score)
-LIMIT 24
+LIMIT 36
 """;
 schema:target <https://query.wikidata.org/sparql> ;
 spex:federatesWith <https://query-scholarly.wikidata.org/sparql>, <http://wikiba.se/ontology#label> ;
