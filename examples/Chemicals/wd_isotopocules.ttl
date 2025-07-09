@@ -7,7 +7,7 @@
 @prefix hint: <http://www.bigdata.com/queryHints#> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
-ex:wd_isotopes a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+ex:wd_isotopocules a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
 rdfs:comment "Which structures are isotopically-labeled ones?"@en ;
 sh:prefixes _:sparql_examples_prefixes ;
 sh:select """
