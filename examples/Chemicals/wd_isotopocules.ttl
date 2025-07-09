@@ -8,18 +8,16 @@
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
 ex:wd_isotopes a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
-rdfs:comment "Elements and their isotopes"@en ;
+rdfs:comment "Which structures are isotopically-labeled ones?"@en ;
 sh:prefixes _:sparql_examples_prefixes ;
 sh:select """
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-#title: Elements and their isotopes.
-SELECT DISTINCT ?element ?element_symbol ?isotope ?isotope_mass ?isotope_abundance WHERE {
-  ?isotope wdt:P2374 ?isotope_abundance;
-    wdt:P2067 ?isotope_mass;
-    wdt:P279 ?element.
-  ?element wdt:P246 ?element_symbol.
+PREFIX hint: <http://www.bigdata.com/queryHints#>
+#title: Which structures are isotopically-labeled ones?
+SELECT ?structure WHERE {
+    ?structure wdt:P234 ?inchi. hint:Prior hint:rangeSafe true.
+    FILTER(REGEX(STR(?inchi), "/i"))
 }
-ORDER BY (?isotope_mass)
 """;
 schema:target <https://query.wikidata.org/sparql> ;
 dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
