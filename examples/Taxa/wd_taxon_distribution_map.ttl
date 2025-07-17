@@ -1,0 +1,34 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/Taxa/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:wd_taxon_distribution_map a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+rdfs:comment "Taxon distribution map."@en ;
+sh:prefixes _:sparql_examples_prefixes ;
+sh:select """
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+#defaultView:Map
+SELECT * WHERE {
+  VALUES ?parent {
+    wd:Q10908
+  }
+  ?taxon (wdt:P171*) ?parent;
+    wdt:P8485 ?map.
+  BIND(STRAFTER(STR(?taxon), "Q") AS ?idStr)
+  BIND(xsd:integer(?idStr) AS ?taxonId)
+  BIND(SHA1(CONCAT(STR(?taxonId))) AS ?hash)
+  BIND(CONCAT(SUBSTR(?hash, 1 , 2 ), SUBSTR(?hash, 3 , 2 ), SUBSTR(?hash, 5 , 2 )) AS ?rgb)
+}
+""";
+schema:target <https://query.wikidata.org/sparql> ;
+dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+schema:keywords "taxa" ;
+dc:creator "Adriano Rutz" .
