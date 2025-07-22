@@ -1,0 +1,36 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/Maintenance/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+
+ex:wd_maintenance_inferred_statements a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+rdfs:comment "Statements inferred from another chemical property."@en ;
+sh:prefixes _:sparql_examples_prefixes ;
+sh:select """
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX pr: <http://www.wikidata.org/prop/reference/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+#title: Statements inferred from another chemical property.
+SELECT ?item (COUNT(?statement) AS ?count) WHERE {
+  VALUES ?inferred {
+    # wd:Q123137214
+    wd:Q113993940
+    # wd:Q113907573
+    # wd:Q123282952
+  }
+  ?item ?p ?s.
+  ?s prov:wasDerivedFrom ?statement.
+  ?statement pr:P887 ?inferred.
+}
+GROUP BY ?item ?p ?s ?inferred
+HAVING (?count > 1 )
+""";
+schema:target <https://query.wikidata.org/sparql> ;
+dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+schema:keywords "maintenance", "chemicals" ;
+dc:creator "Adriano Rutz" .

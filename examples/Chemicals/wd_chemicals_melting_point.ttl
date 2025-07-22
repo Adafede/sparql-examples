@@ -6,7 +6,6 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
 @prefix bd: <http://www.bigdata.com/rdf#> .
-@prefix hint: <http://www.bigdata.com/queryHints#> .
 @prefix p: <http://www.wikidata.org/prop/> .
 @prefix ps: <http://www.wikidata.org/prop/statement/> .
 @prefix psv: <http://www.wikidata.org/prop/statement/value/> .
