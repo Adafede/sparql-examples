@@ -4,7 +4,6 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix hint: <http://www.bigdata.com/queryHints#> .
 @prefix pr: <http://www.wikidata.org/prop/reference/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
@@ -16,17 +15,13 @@ sh:select """
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX pr: <http://www.wikidata.org/prop/reference/>
 PREFIX prov: <http://www.w3.org/ns/prov#>
-PREFIX hint: <http://www.bigdata.com/queryHints#>
 #title: Statements no longer valid because (none of) the InChIKey(s) of the item does not correspond to the InChIKey matched for the reference.
 SELECT ?item ?statement ?inchikey_item ?inchikey_ref WHERE {
     {
         SELECT ?item ?statement (GROUP_CONCAT(?ii; SEPARATOR = " ") AS ?inchikey_item) ?inchikey_ref WHERE {
             ?statement (prov:wasDerivedFrom/pr:P235) ?inchikey_ref.
-            hint:Prior hint:rangeSafe true.
             ?item ?p ?statement.
-            hint:Prior hint:rangeSafe true.
             ?item wdt:P235 ?ii.
-            hint:Prior hint:rangeSafe true.
         }
         GROUP BY ?item ?statement ?inchikey_ref
     }

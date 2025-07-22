@@ -4,7 +4,6 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix hint: <http://www.bigdata.com/queryHints#> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
 ex:wd_isotopocules a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
@@ -12,10 +11,9 @@ rdfs:comment "Which structures are isotopically-labeled ones?"@en ;
 sh:prefixes _:sparql_examples_prefixes ;
 sh:select """
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-PREFIX hint: <http://www.bigdata.com/queryHints#>
 #title: Which structures are isotopically-labeled ones?
 SELECT ?structure WHERE {
-    ?structure wdt:P234 ?inchi. hint:Prior hint:rangeSafe true.
+    ?structure wdt:P234 ?inchi.
     FILTER(REGEX(STR(?inchi), "/i"))
 }
 """;

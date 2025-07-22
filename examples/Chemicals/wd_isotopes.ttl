@@ -4,7 +4,6 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix hint: <http://www.bigdata.com/queryHints#> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
 ex:wd_isotopes a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
