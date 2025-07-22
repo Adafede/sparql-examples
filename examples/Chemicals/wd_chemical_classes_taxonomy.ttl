@@ -6,7 +6,6 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
 @prefix bd: <http://www.bigdata.com/rdf#> .
-@prefix hint: <http://www.bigdata.com/queryHints#> .
 @prefix wd: <http://www.wikidata.org/entity/> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 @prefix wikibase: <http://wikiba.se/ontology#> .
@@ -19,7 +18,6 @@ PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wikibase: <http://wikiba.se/ontology#>
 PREFIX bd: <http://www.bigdata.com/rdf#>
-PREFIX hint: <http://www.bigdata.com/queryHints#>
 #title: Chemical classes taxonomy
 SELECT * WHERE {
     VALUES ?instance {
@@ -34,7 +32,7 @@ SELECT * WHERE {
         wd:Q72070508 # group or class of chemical entities
         wd:Q74892521 # imprecise class of chemical entities
     }
-    ?class wdt:P31 ?instance. hint:Prior hint:runFirst true.
+    ?class wdt:P31 ?instance.
     OPTIONAL { ?class wdt:P279 ?parent. }
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
 }
