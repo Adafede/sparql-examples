@@ -6,7 +6,6 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
 @prefix bd: <http://www.bigdata.com/rdf#> .
-@prefix hint: <http://www.bigdata.com/queryHints#> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 @prefix wikibase: <http://wikiba.se/ontology#> .
 
@@ -17,7 +16,6 @@ sh:select """
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wikibase: <http://wikiba.se/ontology#>
 PREFIX bd: <http://www.bigdata.com/rdf#>
-PREFIX hint: <http://www.bigdata.com/queryHints#>
 #defaultView:BubbleChart
 PREFIX target: <http://www.wikidata.org/entity/Q97455964>
 SELECT ?score ?topic ?topicLabel WHERE {
