@@ -1,0 +1,30 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/Maintenance/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+
+ex:wd_maintenance_nps_few_statements a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+rdfs:comment "NPs with very few statements."@en ;
+sh:prefixes _:sparql_examples_prefixes ;
+sh:select """
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+#title: NPs with very few statements
+SELECT DISTINCT ?structure ?count WHERE {
+  VALUES ?min_val { 20 }
+  ?structure p:P703 [];
+    p:P235 [];
+    wikibase:statements ?count.
+  FILTER(?count < ?min_val )
+}
+ORDER BY (?count)
+
+""";
+schema:target <https://query.wikidata.org/sparql> ;
+dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+schema:keywords "maintenance", "chemicals" ;
+dc:creator "Adriano Rutz" .
