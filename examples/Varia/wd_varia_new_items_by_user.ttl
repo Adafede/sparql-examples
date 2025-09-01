@@ -10,7 +10,7 @@
 @prefix mwapi: <https://www.mediawiki.org/ontology#API/> .
 @prefix wikibase: <http://wikiba.se/ontology#> .
 
-ex:wd_new_items_by_user a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+ex:wd_varia_new_items_by_user a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
 rdfs:comment "New items by user."@en ;
 sh:prefixes _:sparql_examples_prefixes ;
 sh:select """

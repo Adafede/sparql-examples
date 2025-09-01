@@ -6,7 +6,7 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
-ex:wd_authors_expertise a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+ex:wd_scholarly_authors_expertise a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
 rdfs:comment "Authors (females) with expertise in proteomics and computational biology."@en ;
 sh:prefixes _:sparql_examples_prefixes ;
 sh:select """
