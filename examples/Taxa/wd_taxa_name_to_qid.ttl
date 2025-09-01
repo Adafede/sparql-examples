@@ -8,6 +8,7 @@
 @prefix bd: <http://www.bigdata.com/rdf#> .
 @prefix mwapi: <https://www.mediawiki.org/ontology#API/> .
 @prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:wd_taxa_name_to_qid a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
@@ -16,6 +17,7 @@ sh:prefixes _:sparql_examples_prefixes ;
 sh:select """
 PREFIX mwapi: <https://www.mediawiki.org/ontology#API/>
 PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX bd: <http://www.bigdata.com/rdf#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 #title: Taxa. Taxon name to QID.
