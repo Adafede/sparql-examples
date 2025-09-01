@@ -9,7 +9,7 @@
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 @prefix wikibase: <http://wikiba.se/ontology#> .
 
-ex:wd_authors_topics a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+ex:wd_scholarly_authors_topics a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
 rdfs:comment "Author's topic of expertise."@en ;
 sh:prefixes _:sparql_examples_prefixes ;
 sh:select """

@@ -8,8 +8,8 @@
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:wd_taxon_distribution_map a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
-rdfs:comment "Taxon distribution map."@en ;
+ex:wd_taxa_distribution_map a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+rdfs:comment "Taxa distribution map."@en ;
 sh:prefixes _:sparql_examples_prefixes ;
 sh:select """
 PREFIX wd: <http://www.wikidata.org/entity/>
