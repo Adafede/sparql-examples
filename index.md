@@ -1,22 +1,15 @@
-# SIB SPARQL examples
+# SPARQL examples
 
-We collect the SPARQL examples in different formats,
-for different projects of the SIB Swiss Institute of Bioinformatics where we
-have a public SPARQL endpoint.
+This repository provides a collection of SPARQL query examples in various formats, tailored for different projects with publicly available SPARQL endpoints.
 
-In this github pages we have a HTML rendering for all them.
+We continuously expand this collection to highlight diverse use cases, including:
 
- * [Bgee](./examples/Bgee/)
- * [Cellosaurus](./examples/Cellosaurus)
- * [emi](./examples/emi/)
- * [GlyConnect](./examples/GlyConnect/)
- * [HAMAP](./examples/HAMAP/)
- * [MetaNetX](./examples/MetaNetX/)
- * [neXtProt](./examples/neXtProt/)
- * [OMA](./examples/OMA/)
- * [OrthoDB](./examples/OrthoDB)
- * [Rhea](./examples/Rhea)
- * [SwissLipids](./examples/SwissLipids)
- * [UniProt](./examples/UniProt/)
+* [Chemicals](./examples/Chemicals/)
+* [Maintenance](./examples/Maintenance/)
+* [Omics](./examples/Omics/)
+* [Scholarly](./examples/Scholarly/)
+* [Taxa](./examples/Taxa/)
+* [Varia](./examples/Varia/)
 
-We also collect [some basic statistics on the different SPARQL features in use](./examples/algebra-statistics.md)
+This repository is based on the work by the [SIB Swiss Institute of Bioinformatics](https://www.sib.swiss/),
+and specifically [this repository](https://github.com/sib-swiss/sparql-examples).
