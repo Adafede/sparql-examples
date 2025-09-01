@@ -8,7 +8,7 @@
 @prefix wd: <http://www.wikidata.org/entity/> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
-ex:wd_maintenance_orphan_chemicals a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+ex:wd_maintenance_chemicals_orphan a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
 rdfs:comment "Maintenance. Add subclasses to orphan chemical entities."@en ;
 sh:prefixes _:sparql_examples_prefixes ;
 sh:select """

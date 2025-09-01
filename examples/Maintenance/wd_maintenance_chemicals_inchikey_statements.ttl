@@ -8,7 +8,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
-ex:wd_maintenance_inchikey_statements a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+ex:wd_maintenance_chemicals_inchikey_statements a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
 rdfs:comment "Statements no longer valid because (none of) the InChIKey(s) of the item does not correspond to the InChIKey matched for the reference."@en ;
 sh:prefixes _:sparql_examples_prefixes ;
 sh:select """
