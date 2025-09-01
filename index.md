@@ -1,11 +1,15 @@
 # SPARQL examples
 
-Edit this file to change YOUR\_PROJECT to the name of your actual project.
-In YOUR\_PROJECT. In that directory keep your project specific prefixes.ttl and 
-the ttl files containing your example queries.
+This repository provides a collection of SPARQL query examples in various formats, tailored for different projects with publicly available SPARQL endpoints.
 
- * [YOUR PROJECT](./examples/YOUR_PROJECT/)
+We continuously expand this collection to highlight diverse use cases, including:
 
-# Examples
+* [Chemicals](./examples/Chemicals/)
+* [Maintenance](./examples/Maintenance/)
+* [Omics](./examples/Omics/)
+* [Scholarly](./examples/Scholarly/)
+* [Taxa](./examples/Taxa/)
+* [Varia](./examples/Varia/)
 
-* [SIB Swiss Institute of Bioinformatics](https://sib-swiss.github.io/sparql-examples/)
+This repository is based on the work by the [SIB Swiss Institute of Bioinformatics](https://www.sib.swiss/),
+and specifically [this repository](https://github.com/sib-swiss/sparql-examples).
