@@ -37,5 +37,5 @@ ORDER BY DESC (?works) DESC (?awards) DESC (?count)
 """;
 schema:target <https://query.wikidata.org/sparql> ;
 dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
-schema:keywords "authors" ;
+schema:keywords "scholarly articles", "authors" ;
 dc:creator "Adriano Rutz" .

@@ -26,5 +26,5 @@ ORDER BY (?count)
 """;
 schema:target <https://query.wikidata.org/sparql> ;
 dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
-schema:keywords "maintenance", "chemicals" ;
+schema:keywords "maintenance", "natural products" ;
 dc:creator "Adriano Rutz" .
