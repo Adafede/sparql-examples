@@ -6,14 +6,15 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
-ex:wd_chemicals_smiles a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
-rdfs:comment "Canonical SMILES"@en ;
+ex:wd_chemicals_discovery_date a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+rdfs:comment "Chemicals discovery date."@en ;
 sh:prefixes _:sparql_examples_prefixes ;
 sh:select """
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-#title: Canonical SMILES
-SELECT ?item ?smiles_canonical WHERE {
-    ?item wdt:P233 ?smiles_canonical.
+#title: Chemicals discovery date.
+SELECT * WHERE {
+  ?structure wdt:P235 ?structure_inchikey;
+    wdt:P575 ?reference_date.
 }
 """;
 schema:target <https://query.wikidata.org/sparql> ;
