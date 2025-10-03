@@ -8,6 +8,8 @@ We continuously expand this collection to highlight diverse use cases, including
 * [Maintenance](./examples/Maintenance/)
 * [Omics](./examples/Omics/)
 * [Scholarly](./examples/Scholarly/)
+	* [Articles](./examples/Scholarly/Articles/)
+	* [Authors](./examples/Scholarly/Authors/)
 * [Taxa](./examples/Taxa/)
 * [Varia](./examples/Varia/)
 
