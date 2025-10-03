@@ -19,7 +19,8 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 SELECT ?item ?statement ?inchikey_item ?inchikey_ref WHERE {
     {
         SELECT ?item ?statement (GROUP_CONCAT(?ii; SEPARATOR = " ") AS ?inchikey_item) ?inchikey_ref WHERE {
-            ?statement (prov:wasDerivedFrom/pr:P235) ?inchikey_ref.
+            ?statement prov:wasDerivedFrom ?prov.
+            ?prov pr:P235 ?inchikey_ref.
             ?item ?p ?statement.
             ?item wdt:P235 ?ii.
         }
