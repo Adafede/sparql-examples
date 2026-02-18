@@ -32,7 +32,7 @@ jobs:
         java-version: '21'
     
     - name: Install tester
-      run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.19/sparql-examples-utils-2.0.19-uber.jar" -O sparql-examples-utils-uber.jar
+      run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.23/sparql-examples-utils-2.0.23-uber.jar" -O sparql-examples-utils-uber.jar
 
     - name: generate markdown
       run: java -jar sparql-examples-utils-uber.jar convert -i examples/ -m 
@@ -40,18 +40,18 @@ jobs:
     - name: generate rq files
       run: java -jar sparql-examples-utils-uber.jar convert -i examples/ -r
 
+    - name: Additional fixes
+      run: bash additional_fixes.sh
+
     - name: Setup Pages
       id: pages
       uses: actions/configure-pages@v5
 
-    - name: Build with Jekyll
-      uses: actions/jekyll-build-pages@v1
-      with:
-        source: ./
-        destination: ./_site
-       
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
+    - uses: quarto-dev/quarto-actions/setup@v2
+
+    - uses: quarto-dev/quarto-actions/render@v2
+
+    - uses: actions/upload-pages-artifact@v3
 
   # Deployment job
   deploy:
