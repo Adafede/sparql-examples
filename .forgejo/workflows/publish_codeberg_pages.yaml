@@ -48,19 +48,40 @@ jobs:
             </head>
             <body>
               <div class="wrapper">
+                <header>
+                  <h1><a href="{{ '/' | prepend: site.baseurl }}">{{ site.title }}</a></h1>
+                  <p>{{ site.description }}</p>
+                  {% if site.github_username %}
+                  <p><a href="https://github.com/{{ site.github_username }}/{{ site.github_repo }}">View the Project on GitHub</a></p>
+                  {% endif %}
+                </header>
                 <section>
                   {{ content }}
                 </section>
+                <footer>
+                  <p>Hosted on <a href="https://codeberg.org">Codeberg</a></p>
+                </footer>
               </div>
-              <footer>
-                <p>Hosted on <a href="https://codeberg.org">Codeberg</a></p>
-              </footer>
+              <script type="module">
+                import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+                document.querySelectorAll('code.language-mermaid').forEach(el => {
+                  const div = document.createElement('div');
+                  div.className = 'mermaid';
+                  div.textContent = el.textContent;
+                  el.parentNode.replaceWith(div);
+                });
+                mermaid.initialize({ startOnLoad: true });
+              </script>
             </body>
           </html>
           EOF
           cat > _config.yml << 'EOF'
           baseurl: "/sparql-examples"
           url: "https://adafede.codeberg.page"
+          title: "sparql-examples"
+          description: "A set of SPARQL examples"
+          github_username: Adafede
+          github_repo: sparql-examples
           theme: null
           EOF
 
