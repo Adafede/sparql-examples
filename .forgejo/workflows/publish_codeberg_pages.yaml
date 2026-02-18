@@ -190,10 +190,11 @@ jobs:
               <nav aria-label="Site navigation">
                 <a href="{{ '/' | prepend: site.baseurl }}">{{ site.title }}</a>
                 {% assign parts = page.path | split: '/' %}
+                {% assign parts = parts | slice: 1, parts.size %}
                 {% if parts.size > 1 %}
                 <span class="breadcrumb" aria-label="Breadcrumb">
                   {% for part in parts limit: parts.size minus: 1 %}
-                    {% assign href = '' %}
+                    {% assign href = '/examples' %}
                     {% for i in (0..forloop.index0) %}{% assign href = href | append: '/' | append: parts[i] %}{% endfor %}
                     / <a href="{{ href | prepend: site.baseurl }}">{{ part }}</a>
                   {% endfor %}
