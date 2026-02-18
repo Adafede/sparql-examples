@@ -60,6 +60,8 @@ jobs:
           baseurl: "/sparql-examples"
           url: "https://adafede.codeberg.page"
           theme: null
+          plugins:
+            - jekyll-seo-tag
           EOF
 
       - name: Build with Jekyll
