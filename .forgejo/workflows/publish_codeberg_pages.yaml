@@ -21,7 +21,7 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Install tester
+      - name: Install sparql-examples-utils
         run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.23/sparql-examples-utils-2.0.23-uber.jar" -O sparql-examples-utils-uber.jar
 
       - name: Generate markdown
@@ -30,38 +30,38 @@ jobs:
       - name: Generate rq files
         run: java -jar sparql-examples-utils-uber.jar convert -i examples/ -r
 
-      - name: Download modernist theme
-        run: |
-          mkdir -p _layouts assets/css assets/js
-          wget "https://raw.githubusercontent.com/pages-themes/modernist/master/_layouts/default.html" -O _layouts/default.html
-          wget "https://pages-themes.github.io/modernist/assets/css/style.css" -O assets/css/style.css
-          wget "https://raw.githubusercontent.com/pages-themes/modernist/master/assets/js/scale.fix.js" -O assets/js/scale.fix.js
-
-      - name: Fix theme footer
-        run: |
-          python3 -c "
-          import pathlib
-          f = pathlib.Path('_layouts/default.html')
-          content = f.read_text()
-          content = content.replace(
-            'Hosted on GitHub Pages &mdash; Theme by <a href=\"https://github.com/orderedlist\">orderedlist</a>',
-            'Hosted on <a href=\"https://codeberg.org\">Codeberg</a>'
-          )
-          f.write_text(content)
-          "
-
       - name: Fix generated URLs
-        run: |
-          find . -name "*.md" ! -path "./_site/*" -exec sed -i 's|/pages/adafede/sparql-examples/|/sparql-examples/|g' {} +
+        run: find . -name "*.md" ! -path "./_site/*" -exec sed -i 's|/pages/adafede/sparql-examples/|/sparql-examples/|g' {} +
 
-      - name: Write Jekyll config
+      - name: Write minimal layout and config
         run: |
+          mkdir -p _layouts assets/css
+          wget "https://pages-themes.github.io/modernist/assets/css/style.css" -O assets/css/style.css
+          cat > _layouts/default.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en-US">
+            <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+              <title>{{ page.title | default: site.title }}</title>
+              <link rel="stylesheet" href="{{ '/assets/css/style.css' | prepend: site.baseurl }}">
+            </head>
+            <body>
+              <div class="wrapper">
+                <section>
+                  {{ content }}
+                </section>
+              </div>
+              <footer>
+                <p>Hosted on <a href="https://codeberg.org">Codeberg</a></p>
+              </footer>
+            </body>
+          </html>
+          EOF
           cat > _config.yml << 'EOF'
           baseurl: "/sparql-examples"
           url: "https://adafede.codeberg.page"
           theme: null
-          plugins:
-            - jekyll-seo-tag
           EOF
 
       - name: Build with Jekyll
@@ -73,6 +73,6 @@ jobs:
       - name: Deploy to Codeberg Pages
         uses: actions/git-pages@v2
         with:
-          site: https://adafede.codeberg.page/sparql-examples/
+          site: https://adafede.codeberg.page/sparql-examples/ 
           token: ${{ forge.token }}
           source: ./_site
