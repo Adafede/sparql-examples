@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<language name="SPARQL-WIKIDATA" section="Database" extensions="*.rq;*.sparql" mimetype="application/sparql-query" version="2" kateversion="5.0" author="Leo Savernik" license="LGPL">
+  <highlighting>
+    <list name="keywords">
+      <item>BASE</item>
+      <item>PREFIX</item>
+      <item>SELECT</item>
+      <item>DISTINCT</item>
+      <item>REDUCED</item>
+      <item>CONSTRUCT</item>
+      <item>DESCRIBE</item>
+      <item>ASK</item>
+      <item>FROM</item>
+      <item>NAMED</item>
+      <item>WHERE</item>
+      <item>ORDER</item>
+      <item>BY</item>
+      <item>ASC</item>
+      <item>DESC</item>
+      <item>LIMIT</item>
+      <item>OFFSET</item>
+      <item>OPTIONAL</item>
+      <item>GRAPH</item>
+      <item>UNION</item>
+      <item>FILTER</item>
+      <item>AS</item>
+      <item>GROUP</item>
+      <item>HAVING</item>
+      <item>UNDEF</item>
+      <item>BIND</item>
+      <item>VALUES</item>
+      <item>MINUS</item>
+      <item>SERVICE</item>
+      <item>SILENT</item>
+    </list>
+    
+    <list name="wikidata_keywords">
+      <item>LABEL</item>
+      <item>AUTO_LANGUAGE</item>
+      <item>AROUND</item>
+      <item>CIRCLE</item>
+      <item>BOX</item>
+    </list>
+
+    <list name="types">
+      <item>STR</item>
+      <item>LANG</item>
+      <item>LANGMATCHES</item>
+      <item>DATATYPE</item>
+      <item>BOUND</item>
+      <item>IRI</item>
+      <item>URI</item>
+      <item>BNODE</item>
+      <item>RAND</item>
+      <item>ABS</item>
+      <item>CEIL</item>
+      <item>FLOOR</item>
+      <item>ROUND</item>
+      <item>CONCAT</item>
+      <item>STRLEN</item>
+      <item>UCASE</item>
+      <item>LCASE</item>
+      <item>ENCODE_FOR_URI</item>
+      <item>CONTAINS</item>
+      <item>STRSTARTS</item>
+      <item>STRENDS</item>
+      <item>STRBEFORE</item>
+      <item>STRAFTER</item>
+      <item>YEAR</item>
+      <item>MONTH</item>
+      <item>DAY</item>
+      <item>HOURS</item>
+      <item>MINUTES</item>
+      <item>SECONDS</item>
+      <item>TIMEZONE</item>
+      <item>TZ</item>
+      <item>NOW</item>
+      <item>UUID</item>
+      <item>STRUUID</item>
+      <item>MD5</item>
+      <item>SHA1</item>
+      <item>SHA256</item>
+      <item>SHA384</item>
+      <item>SHA512</item>
+      <item>COALESCE</item>
+      <item>IF</item>
+      <item>STRLANG</item>
+      <item>STRDT</item>
+      <item>sameTerm</item>
+      <item>isIRI</item>
+      <item>isURI</item>
+      <item>isBLANK</item>
+      <item>isLITERAL</item>
+      <item>isNUMERIC</item>
+      <item>REGEX</item>
+      <item>SUBSTR</item>
+      <item>REPLACE</item>
+      <item>EXISTS</item>
+      <item>NOT</item>
+      <item>COUNT</item>
+      <item>SUM</item>
+      <item>MIN</item>
+      <item>MAX</item>
+      <item>AVG</item>
+      <item>SAMPLE</item>
+      <item>GROUP_CONCAT</item>
+      <item>SEPARATOR</item>
+      <item>IN</item>
+    </list>
+
+    <list name="constants">
+      <item>a</item>
+      <item>true</item>
+      <item>false</item>
+    </list>
+
+    <contexts>
+      <context name="Normal" attribute="Normal Text" lineEndContext="#stay">
+        <DetectSpaces/>
+        <DetectChar attribute="Comment" context="Comment" char="#"/>
+        <keyword attribute="Keyword" context="#stay" String="keywords"/>
+        <keyword attribute="Wikidata Keyword" context="#stay" String="wikidata_keywords"/>
+        <keyword attribute="Data Type" context="#stay" String="types"/>
+        <keyword attribute="Constant" context="#stay" String="constants"/>
+        
+        <!-- Wikidata prefixes -->
+        <RegExpr attribute="Wikidata Prefix" context="#stay" String="\b(wd|wdt|wds|wdv|wdref|p|ps|pq|pr|psv|pqv|prv|psn|pqn|prn|wdno|wdata|bd|cc|dct|geo|geof|hint|ontolex|owl|prov|rdf|rdfs|schema|skos|xsd|mwapi|gas|wikibase|mediawiki):"/>
+        
+        <!-- Wikidata entity IDs (Q-numbers and P-numbers) -->
+        <RegExpr attribute="Wikidata Entity" context="#stay" String="\b[QPL]\d+\b"/>
+        
+        <!-- Variables -->
+        <RegExpr attribute="Variable" context="#stay" String="[?$]\w+"/>
+        
+        <!-- Strings -->
+        <DetectChar attribute="String" context="String" char="&quot;"/>
+        <Detect2Chars attribute="String" context="MultiLineString" char="&quot;" char1="&quot;"/>
+        <DetectChar attribute="String" context="StringSQ" char="'"/>
+        <Detect2Chars attribute="String" context="MultiLineStringSQ" char="'" char1="'"/>
+        
+        <!-- URIs -->
+        <DetectChar attribute="URI" context="URI" char="&lt;"/>
+        
+        <!-- Numbers -->
+        <RegExpr attribute="Number" context="#stay" String="[+-]?(\d+\.\d*|\.\d+|\d+)[eE][+-]?\d+"/>
+        <RegExpr attribute="Number" context="#stay" String="[+-]?(\d+\.\d*|\.\d+)"/>
+        <RegExpr attribute="Number" context="#stay" String="[+-]?\d+"/>
+        
+        <AnyChar attribute="Symbol" context="#stay" String="()[]{}.,;"/>
+      </context>
+
+      <context name="Comment" attribute="Comment" lineEndContext="#pop">
+        <DetectSpaces/>
+        <IncludeRules context="##Comments"/>
+      </context>
+
+      <context name="String" attribute="String" lineEndContext="#stay">
+        <DetectChar attribute="String" context="#pop" char="&quot;"/>
+        <HlCStringChar attribute="String Escape" context="#stay"/>
+      </context>
+
+      <context name="MultiLineString" attribute="String" lineEndContext="#stay">
+        <Detect2Chars attribute="String" context="#stay" char="&quot;" char1="&quot;"/>
+        <StringDetect attribute="String" context="#pop" String="&quot;&quot;&quot;"/>
+        <HlCStringChar attribute="String Escape" context="#stay"/>
+      </context>
+
+      <context name="StringSQ" attribute="String" lineEndContext="#stay">
+        <DetectChar attribute="String" context="#pop" char="'"/>
+        <HlCStringChar attribute="String Escape" context="#stay"/>
+      </context>
+
+      <context name="MultiLineStringSQ" attribute="String" lineEndContext="#stay">
+        <Detect2Chars attribute="String" context="#stay" char="'" char1="'"/>
+        <StringDetect attribute="String" context="#pop" String="'''"/>
+        <HlCStringChar attribute="String Escape" context="#stay"/>
+      </context>
+
+      <context name="URI" attribute="URI" lineEndContext="#stay">
+        <DetectChar attribute="URI" context="#pop" char="&gt;"/>
+      </context>
+    </contexts>
+
+    <itemDatas>
+      <itemData name="Normal Text" defStyleNum="dsNormal"/>
+      <itemData name="Keyword" defStyleNum="dsKeyword" bold="1"/>
+      <itemData name="Wikidata Keyword" defStyleNum="dsKeyword" bold="1" color="#0077cc"/>
+      <itemData name="Data Type" defStyleNum="dsDataType"/>
+      <itemData name="Constant" defStyleNum="dsConstant"/>
+      <itemData name="Variable" defStyleNum="dsVariable" color="#008080"/>
+      <itemData name="Wikidata Prefix" defStyleNum="dsKeyword" color="#0066cc" bold="1"/>
+      <itemData name="Wikidata Entity" defStyleNum="dsConstant" color="#cc6600" bold="1"/>
+      <itemData name="String" defStyleNum="dsString"/>
+      <itemData name="String Escape" defStyleNum="dsSpecialChar"/>
+      <itemData name="URI" defStyleNum="dsOthers" color="#008000"/>
+      <itemData name="Number" defStyleNum="dsDecVal"/>
+      <itemData name="Symbol" defStyleNum="dsOperator"/>
+      <itemData name="Comment" defStyleNum="dsComment"/>
+    </itemDatas>
+  </highlighting>
+
+  <general>
+    <comments>
+      <comment name="singleLine" start="#"/>
+    </comments>
+    <keywords casesensitive="0"/>
+  </general>
+</language>
