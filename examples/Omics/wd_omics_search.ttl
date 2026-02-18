@@ -1,6 +1,6 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix ex: <https://adafede.github.io/sparql-examples/Omics/> .
+@prefix ex: <https://adafede.codeberg.page/sparql-examples/Omics/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -56,7 +56,7 @@ SELECT ?taxon ?child (COUNT(DISTINCT ?g) AS ?genome) (COUNT(DISTINCT ?m) AS ?met
 GROUP BY ?taxon ?child
 HAVING (((?genome > 0 ) || (?metabolome > 0 )) || (?proteome > 0 ))
 """;
-schema:target <https://query.wikidata.org/sparql> ;
+schema:target <https://qlever.dev/wikidata> ;
 dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
 schema:keywords "omics" ;
 dc:creator "Adriano Rutz" .

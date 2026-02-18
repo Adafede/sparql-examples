@@ -1,6 +1,6 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix ex: <https://adafede.github.io/sparql-examples/Maintenance/> .
+@prefix ex: <https://adafede.codeberg.page/sparql-examples/Maintenance/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -30,7 +30,7 @@ SELECT DISTINCT (REPLACE(STR(?item), ".*Q", "Q") AS ?qid) ?P279 WHERE {
 }
 # LIMIT 500000
 """;
-schema:target <https://query.wikidata.org/sparql> ;
+schema:target <https://qlever.dev/wikidata> ;
 dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
 schema:keywords "maintenance", "chemicals" ;
 dc:creator "Adriano Rutz" .
