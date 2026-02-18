@@ -1,0 +1,61 @@
+---
+format:
+  html:
+    anchor-sections: true
+    axe: true
+    grid:
+      body-width: 1200px
+    # include-in-header:
+    #   - _includes/dokieli.html
+    # minimal: true
+    linkcolor: "#3377c4"
+    link-external-icon: false
+    link-external-newwindow: true
+    theme:
+      - none
+    respect-user-color-scheme: true
+    smooth-scroll: true
+
+project:
+  type: website
+
+syntax-definitions:
+  - sparql.xml
+
+website:
+  title: sparql-examples
+  description: sparql-examples
+  site-path: ./
+  site-url: https://adafede.github.io/sparql-examples
+  repo-url: https://github.com/adafede/sparql-examples
+  open-graph:
+    locale: en
+    site-name: https://adafede.github.io/sparql-examples
+  navbar:
+    left:
+      - text: Chemicals
+        aria-label: Chemicals
+        href: examples/Chemicals/index.html
+      - text: Maintenance
+        aria-label: Maintenance
+        href: examples/Maintenance/index.html
+      - text: Omics
+        aria-label: Omics
+        href: examples/Omics/index.html
+      - text: Scholarly
+        aria-label: Scholarly
+        href: examples/Scholarly/index.html
+      - text: Taxa
+        aria-label: Taxa
+        href: examples/Taxa/index.html
+      - text: Varia
+        aria-label: Varia
+        href: examples/Varia/index.html
+    search: false
+  page-footer: |
+    This repository is based on the work by the [SIB Swiss Institute of Bioinformatics](https://www.sib.swiss/),
+    and specifically [this repository](https://github.com/sib-swiss/sparql-examples).
+    Source code at <https://codeberg.org/adafede/sparql-examples>
+  body-header: |
+    <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js" crossorigin="anonymous">
+    </script>
