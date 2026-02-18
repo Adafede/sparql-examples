@@ -32,12 +32,10 @@ jobs:
 
       - name: Download modernist theme
         run: |
-          mkdir -p _layouts _sass assets/stylesheets assets/javascripts
-          wget "https://raw.githubusercontent.com/orderedlist/modernist/master/_layouts/default.html" -O _layouts/default.html
-          wget "https://raw.githubusercontent.com/orderedlist/modernist/master/stylesheets/pygment_trac.css" -O assets/stylesheets/pygment_trac.css
-          wget "https://raw.githubusercontent.com/orderedlist/modernist/master/stylesheets/styles.css" -O assets/stylesheets/styles.css
-          wget "https://raw.githubusercontent.com/orderedlist/modernist/master/javascripts/main.js" -O assets/javascripts/main.js
-          wget "https://raw.githubusercontent.com/orderedlist/modernist/master/javascripts/scale.fix.js" -O assets/javascripts/scale.fix.js
+          mkdir -p _layouts assets/css assets/js
+          wget "https://raw.githubusercontent.com/pages-themes/modernist/master/_layouts/default.html" -O _layouts/default.html
+          wget "https://raw.githubusercontent.com/pages-themes/modernist/master/assets/css/style.scss" -O assets/css/style.scss
+          wget "https://raw.githubusercontent.com/pages-themes/modernist/master/assets/js/scale.fix.js" -O assets/js/scale.fix.js
 
       - name: Fix theme asset paths in layout
         run: |
