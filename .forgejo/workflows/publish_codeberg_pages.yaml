@@ -33,6 +33,12 @@ jobs:
       - name: Fix generated URLs
         run: find . -name "*.md" ! -path "./_site/*" -exec sed -i 's|/pages/adafede/sparql-examples/|/sparql-examples/|g' {} +
 
+      - name: Generate syntax highlighting CSS
+        run: |
+          gem install rouge --no-document 2>/dev/null
+          rougify style github > assets/rouge-light.css
+          rougify style github.dark > assets/rouge-dark.css
+
       - name: Write layout and config
         run: |
           mkdir -p _layouts
@@ -42,10 +48,12 @@ jobs:
             <head>
               <meta charset="UTF-8">
               <meta name="viewport" content="width=device-width, initial-scale=1">
-              <title>{{ page.title | default: site.title }}</title>
+              <title>{{ page.title | default: page.name | default: site.title }} | {{ site.title }}</title>
               <link rel="preconnect" href="https://fonts.googleapis.com">
               <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
               <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Fira+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+              <link rel="stylesheet" href="{{ '/assets/rouge-light.css' | prepend: site.baseurl }}" media="(prefers-color-scheme: light)">
+              <link rel="stylesheet" href="{{ '/assets/rouge-dark.css' | prepend: site.baseurl }}" media="(prefers-color-scheme: dark)">
               <style>
                 :root {
                   --color-bg: #ffffff;
@@ -56,6 +64,8 @@ jobs:
                   --color-border: #d0d0d0;
                   --color-code-bg: #f5f5f5;
                   --color-nav-bg: #2d2d2d;
+                  --color-badge-bg: #e8f0fe;
+                  --color-badge-text: #0055cc;
                   --font-body: "Fira Sans", system-ui, sans-serif;
                   --font-mono: "Fira Code", monospace;
                   --max-width: 860px;
@@ -71,6 +81,8 @@ jobs:
                     --color-border: #3a3a3a;
                     --color-code-bg: #2a2a2a;
                     --color-nav-bg: #111111;
+                    --color-badge-bg: #1a2a4a;
+                    --color-badge-text: #6ab0f5;
                   }
                 }
                 *, *::before, *::after { box-sizing: border-box; }
@@ -93,6 +105,9 @@ jobs:
                 nav {
                   background: var(--color-nav-bg);
                   padding: 0.75rem 1.5rem;
+                  display: flex;
+                  align-items: center;
+                  gap: 1rem;
                 }
                 nav a {
                   color: #ffffff;
@@ -103,6 +118,12 @@ jobs:
                 nav a:visited { color: #ffffff; }
                 nav a:hover { text-decoration: underline; }
                 nav a:focus-visible { outline-color: #ffffff; }
+                .breadcrumb {
+                  font-size: 0.85rem;
+                  color: #aaaaaa;
+                  margin-left: auto;
+                }
+                .breadcrumb a { color: #cccccc; font-weight: 400; font-size: 0.85rem; }
                 main {
                   max-width: var(--max-width);
                   margin: 2.5rem auto;
@@ -142,6 +163,20 @@ jobs:
                 ul, ol { padding-left: 1.5rem; }
                 li { margin-bottom: 0.25rem; }
                 hr { border: none; border-top: 1px solid var(--color-border); margin: 2rem 0; }
+                .badge {
+                  display: inline-block;
+                  background: var(--color-badge-bg);
+                  color: var(--color-badge-text);
+                  font-family: var(--font-mono);
+                  font-size: 0.8rem;
+                  padding: 0.2em 0.6em;
+                  border-radius: 4px;
+                  text-decoration: none;
+                  margin-right: 0.4rem;
+                  border: 1px solid var(--color-border);
+                }
+                .badge:visited { color: var(--color-badge-text); }
+                .badge:hover { text-decoration: underline; }
                 footer {
                   margin-top: 3rem;
                   padding-top: 1rem;
@@ -160,6 +195,16 @@ jobs:
             <body>
               <nav aria-label="Site navigation">
                 <a href="{{ '/' | prepend: site.baseurl }}">{{ site.title }}</a>
+                {% assign parts = page.path | split: '/' %}
+                {% if parts.size > 1 %}
+                <span class="breadcrumb" aria-label="Breadcrumb">
+                  {% for part in parts limit: parts.size minus: 1 %}
+                    {% assign href = '' %}
+                    {% for i in (0..forloop.index0) %}{% assign href = href | append: '/' | append: parts[i] %}{% endfor %}
+                    / <a href="{{ href | prepend: site.baseurl }}">{{ part }}</a>
+                  {% endfor %}
+                </span>
+                {% endif %}
               </nav>
               <main id="main-content">
                 {{ content }}
@@ -169,13 +214,34 @@ jobs:
               </main>
               <script type="module">
                 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+                // Convert code.language-mermaid to div.mermaid
                 document.querySelectorAll('code.language-mermaid').forEach(el => {
                   const div = document.createElement('div');
                   div.className = 'mermaid';
                   div.textContent = el.textContent;
                   el.parentNode.replaceWith(div);
                 });
-                mermaid.initialize({ startOnLoad: true, theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default' });
+                mermaid.initialize({
+                  startOnLoad: true,
+                  theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default'
+                });
+                // Style .rq and .ttl links as badges
+                document.querySelectorAll('a[href$=".rq"], a[href$=".ttl"]').forEach(el => {
+                  el.classList.add('badge');
+                });
+                // Make "Use at" SPARQL endpoint links open query service with pre-loaded query
+                const queryBlock = document.querySelector('pre code');
+                if (queryBlock) {
+                  const query = queryBlock.textContent;
+                  document.querySelectorAll('a[href*="sparql"]').forEach(el => {
+                    const base = el.href.replace(/\/sparql$/, '');
+                    const queryUrl = base + '/#' + encodeURIComponent(query);
+                    el.href = queryUrl;
+                    el.title = 'Open in query editor';
+                    el.setAttribute('target', '_blank');
+                    el.setAttribute('rel', 'noopener noreferrer');
+                  });
+                }
               </script>
             </body>
           </html>
