@@ -33,12 +33,6 @@ jobs:
       - name: Fix generated URLs
         run: find . -name "*.md" ! -path "./_site/*" -exec sed -i 's|/pages/adafede/sparql-examples/|/sparql-examples/|g' {} +
 
-      - name: Generate syntax highlighting CSS
-        run: |
-          gem install rouge --no-document 2>/dev/null
-          rougify style github > assets/rouge-light.css
-          rougify style github.dark > assets/rouge-dark.css
-
       - name: Write layout and config
         run: |
           mkdir -p _layouts
@@ -52,8 +46,8 @@ jobs:
               <link rel="preconnect" href="https://fonts.googleapis.com">
               <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
               <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Fira+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-              <link rel="stylesheet" href="{{ '/assets/rouge-light.css' | prepend: site.baseurl }}" media="(prefers-color-scheme: light)">
-              <link rel="stylesheet" href="{{ '/assets/rouge-dark.css' | prepend: site.baseurl }}" media="(prefers-color-scheme: dark)">
+              <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+              <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
               <style>
                 :root {
                   --color-bg: #ffffff;
@@ -212,9 +206,11 @@ jobs:
                   Hosted on <a href="https://codeberg.org">Codeberg</a>
                 </footer>
               </main>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sparql.min.js"></script>
               <script type="module">
                 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-                // Convert code.language-mermaid to div.mermaid
+                // Convert code.language-mermaid to div.mermaid before highlight.js runs
                 document.querySelectorAll('code.language-mermaid').forEach(el => {
                   const div = document.createElement('div');
                   div.className = 'mermaid';
@@ -224,6 +220,10 @@ jobs:
                 mermaid.initialize({
                   startOnLoad: true,
                   theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default'
+                });
+                // Syntax highlighting for all remaining code blocks
+                document.querySelectorAll('pre code').forEach(el => {
+                  hljs.highlightElement(el);
                 });
                 // Style .rq and .ttl links as badges
                 document.querySelectorAll('a[href$=".rq"], a[href$=".ttl"]').forEach(el => {
@@ -235,8 +235,7 @@ jobs:
                   const query = queryBlock.textContent;
                   document.querySelectorAll('a[href*="sparql"]').forEach(el => {
                     const base = el.href.replace(/\/sparql$/, '');
-                    const queryUrl = base + '/#' + encodeURIComponent(query);
-                    el.href = queryUrl;
+                    el.href = base + '/#' + encodeURIComponent(query);
                     el.title = 'Open in query editor';
                     el.setAttribute('target', '_blank');
                     el.setAttribute('rel', 'noopener noreferrer');
@@ -254,6 +253,9 @@ jobs:
           github_username: adafede
           github_repo: sparql-examples
           theme: null
+          kramdown:
+            syntax_highlighter_opts:
+              disable: true
           EOF
 
       - name: Build with Jekyll
