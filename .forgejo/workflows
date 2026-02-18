@@ -1,0 +1,44 @@
+name: Publish to Codeberg Pages
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  publish_html:
+    name: "publish html"
+    runs-on: codeberg-small
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: https://github.com/actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Install tester
+        run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.19/sparql-examples-utils-2.0.19-uber.jar" -O sparql-examples-utils-uber.jar
+
+      - name: Generate markdown
+        run: java -jar sparql-examples-utils-uber.jar convert -i examples/ -m
+
+      - name: Generate rq files
+        run: java -jar sparql-examples-utils-uber.jar convert -i examples/ -r
+
+      - name: Build with Jekyll
+        uses: https://github.com/actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Deploy to Codeberg Pages
+        uses: actions/git-pages@v2
+        with:
+          site: https://adafede.codeberg.page/sparql-examples/
+          token: ${{ forge.token }}
+          source: ./_site
