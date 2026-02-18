@@ -34,8 +34,21 @@ jobs:
         run: |
           mkdir -p _layouts assets/css assets/js
           wget "https://raw.githubusercontent.com/pages-themes/modernist/master/_layouts/default.html" -O _layouts/default.html
-          wget "https://raw.githubusercontent.com/pages-themes/modernist/master/assets/css/style.scss" -O assets/css/style.scss
+          wget "https://pages-themes.github.io/modernist/assets/css/style.css" -O assets/css/style.css
           wget "https://raw.githubusercontent.com/pages-themes/modernist/master/assets/js/scale.fix.js" -O assets/js/scale.fix.js
+
+      - name: Fix theme footer
+        run: |
+          python3 -c "
+          import pathlib
+          f = pathlib.Path('_layouts/default.html')
+          content = f.read_text()
+          content = content.replace(
+            'Hosted on GitHub Pages &mdash; Theme by <a href=\"https://github.com/orderedlist\">orderedlist</a>',
+            'Hosted on <a href=\"https://codeberg.org\">Codeberg</a>'
+          )
+          f.write_text(content)
+          "
 
       - name: Fix generated URLs
         run: |
