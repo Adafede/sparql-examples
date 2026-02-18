@@ -33,10 +33,9 @@ jobs:
       - name: Fix generated URLs
         run: find . -name "*.md" ! -path "./_site/*" -exec sed -i 's|/pages/adafede/sparql-examples/|/sparql-examples/|g' {} +
 
-      - name: Write minimal layout and config
+      - name: Write layout and config
         run: |
-          mkdir -p _layouts assets/css
-          wget "https://pages-themes.github.io/modernist/assets/css/style.css" -O assets/css/style.css
+          mkdir -p _layouts
           cat > _layouts/default.html << 'EOF'
           <!DOCTYPE html>
           <html lang="en-US">
@@ -44,24 +43,130 @@ jobs:
               <meta charset="UTF-8">
               <meta name="viewport" content="width=device-width, initial-scale=1">
               <title>{{ page.title | default: site.title }}</title>
-              <link rel="stylesheet" href="{{ '/assets/css/style.css' | prepend: site.baseurl }}">
+              <link rel="preconnect" href="https://fonts.googleapis.com">
+              <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+              <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Fira+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+              <style>
+                :root {
+                  --color-bg: #ffffff;
+                  --color-text: #1a1a1a;
+                  --color-muted: #595959;
+                  --color-link: #0055cc;
+                  --color-link-visited: #6e3a9f;
+                  --color-border: #d0d0d0;
+                  --color-code-bg: #f5f5f5;
+                  --color-nav-bg: #2d2d2d;
+                  --font-body: "Fira Sans", system-ui, sans-serif;
+                  --font-mono: "Fira Code", monospace;
+                  --max-width: 860px;
+                  --line-height: 1.7;
+                }
+                @media (prefers-color-scheme: dark) {
+                  :root {
+                    --color-bg: #1a1a1a;
+                    --color-text: #e8e8e8;
+                    --color-muted: #a0a0a0;
+                    --color-link: #6ab0f5;
+                    --color-link-visited: #c9a0f5;
+                    --color-border: #3a3a3a;
+                    --color-code-bg: #2a2a2a;
+                    --color-nav-bg: #111111;
+                  }
+                }
+                *, *::before, *::after { box-sizing: border-box; }
+                html { font-size: 18px; }
+                body {
+                  font-family: var(--font-body);
+                  font-size: 1rem;
+                  line-height: var(--line-height);
+                  color: var(--color-text);
+                  background: var(--color-bg);
+                  margin: 0;
+                }
+                a { color: var(--color-link); }
+                a:visited { color: var(--color-link-visited); }
+                a:focus-visible {
+                  outline: 3px solid var(--color-link);
+                  outline-offset: 2px;
+                  border-radius: 2px;
+                }
+                nav {
+                  background: var(--color-nav-bg);
+                  padding: 0.75rem 1.5rem;
+                }
+                nav a {
+                  color: #ffffff;
+                  font-weight: 600;
+                  font-size: 1.1rem;
+                  text-decoration: none;
+                }
+                nav a:visited { color: #ffffff; }
+                nav a:hover { text-decoration: underline; }
+                nav a:focus-visible { outline-color: #ffffff; }
+                main {
+                  max-width: var(--max-width);
+                  margin: 2.5rem auto;
+                  padding: 0 1.5rem;
+                }
+                h1, h2, h3, h4, h5, h6 {
+                  font-family: var(--font-body);
+                  font-weight: 600;
+                  line-height: 1.3;
+                  margin-top: 2rem;
+                }
+                h1 { font-size: 1.9rem; }
+                h2 { font-size: 1.5rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.3rem; }
+                h3 { font-size: 1.2rem; }
+                pre {
+                  font-family: var(--font-mono);
+                  font-size: 0.875rem;
+                  background: var(--color-code-bg);
+                  border: 1px solid var(--color-border);
+                  border-radius: 6px;
+                  padding: 1rem 1.25rem;
+                  overflow-x: auto;
+                  line-height: 1.5;
+                }
+                code {
+                  font-family: var(--font-mono);
+                  font-size: 0.875em;
+                  background: var(--color-code-bg);
+                  padding: 0.15em 0.35em;
+                  border-radius: 3px;
+                }
+                pre code {
+                  background: none;
+                  padding: 0;
+                  font-size: inherit;
+                }
+                ul, ol { padding-left: 1.5rem; }
+                li { margin-bottom: 0.25rem; }
+                hr { border: none; border-top: 1px solid var(--color-border); margin: 2rem 0; }
+                footer {
+                  margin-top: 3rem;
+                  padding-top: 1rem;
+                  border-top: 1px solid var(--color-border);
+                  color: var(--color-muted);
+                  font-size: 0.875rem;
+                }
+                footer a { color: var(--color-muted); }
+                .mermaid { margin: 1.5rem 0; }
+                @media (max-width: 600px) {
+                  html { font-size: 16px; }
+                  main { margin: 1.5rem auto; }
+                }
+              </style>
             </head>
             <body>
-              <div class="wrapper">
-                <header>
-                  <h1><a href="{{ '/' | prepend: site.baseurl }}">{{ site.title }}</a></h1>
-                  <p>{{ site.description }}</p>
-                  {% if site.github_username %}
-                  <p><a href="https://github.com/{{ site.github_username }}/{{ site.github_repo }}">View the Project on GitHub</a></p>
-                  {% endif %}
-                </header>
-                <section>
-                  {{ content }}
-                </section>
+              <nav aria-label="Site navigation">
+                <a href="{{ '/' | prepend: site.baseurl }}">{{ site.title }}</a>
+              </nav>
+              <main id="main-content">
+                {{ content }}
                 <footer>
-                  <p>Hosted on <a href="https://codeberg.org">Codeberg</a></p>
+                  Hosted on <a href="https://codeberg.org">Codeberg</a>
                 </footer>
-              </div>
+              </main>
               <script type="module">
                 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
                 document.querySelectorAll('code.language-mermaid').forEach(el => {
@@ -70,7 +175,7 @@ jobs:
                   div.textContent = el.textContent;
                   el.parentNode.replaceWith(div);
                 });
-                mermaid.initialize({ startOnLoad: true });
+                mermaid.initialize({ startOnLoad: true, theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default' });
               </script>
             </body>
           </html>
@@ -80,8 +185,8 @@ jobs:
           url: "https://adafede.codeberg.page"
           title: "sparql-examples"
           description: "A set of SPARQL examples"
-          github_username: Adafede
-          github_repo: sparql-examples
+          github_username: adafede
+	      github_repo: sparql-examples
           theme: null
           EOF
 
