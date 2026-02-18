@@ -51,6 +51,11 @@ website:
       - text: Varia
         aria-label: Varia
         href: examples/Varia/index.html
+    right:
+      - text: "![](https://codeberg.org/Codeberg/Design/raw/branch/main/logo/icon/svg/codeberg-logo_icon_white.svg)"
+        aria-label: Codeberg
+        href: https://codeberg.org/adafede/sparql-examples
+      
     search: false
   page-footer: |
     This repository is based on the work by the [SIB Swiss Institute of Bioinformatics](https://www.sib.swiss/),
