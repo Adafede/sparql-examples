@@ -21,7 +21,7 @@ jobs:
       run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.23/sparql-examples-utils-2.0.23-uber.jar" -O sparql-examples-utils.jar
 
     - name: Upgrade RDFlib
-      run: pip install --upgrade rdflib
+      run: pip install --upgrade rdflib --break-system-packages
 
     - name: Run tests
       run: java -jar sparql-examples-utils.jar test --input-directory=examples/
