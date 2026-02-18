@@ -38,8 +38,7 @@ jobs:
       - name: Build with Quarto
         run: quarto render
 
-      - name: Deploy to Codeberg Pages
-        uses: actions/git-pages@v2
+      - uses: actions/git-pages@v2
         with:
           site: https://adafede.codeberg.page/sparql-examples/
           token: ${{ forge.token }}
