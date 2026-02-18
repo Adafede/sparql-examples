@@ -186,7 +186,7 @@ jobs:
           title: "sparql-examples"
           description: "A set of SPARQL examples"
           github_username: adafede
-	      github_repo: sparql-examples
+          github_repo: sparql-examples
           theme: null
           EOF
 
