@@ -15,6 +15,25 @@ find examples/ -name "*.md" | while read -r f; do
   sedi 's|/pages/adafede/sparql-examples/|/sparql-examples/|g' "$f"
 done
 
+# Fix bare URLs under "## Use at" to angle-bracket form
+find examples/ -name "*.md" | while read -r f; do
+  tmp="${f}.tmp"
+  in_use_at=0
+  while IFS= read -r line; do
+    if [[ "$line" == "## Use at"* ]]; then
+      in_use_at=1
+    elif [[ "$line" == "##"* ]]; then
+      in_use_at=0
+    fi
+    if [[ $in_use_at -eq 1 && "$line" =~ ^[[:space:]]*\*[[:space:]]https?:// ]]; then
+      url=$(echo "$line" | grep -o 'https\?://[^ ]*')
+      line=" * <${url}>"
+    fi
+    printf '%s\n' "$line"
+  done < "$f" > "$tmp"
+  mv "$tmp" "$f"
+done
+
 # Convert md to qmd with proper fenced blocks
 find examples/ -name "*.md" | while read -r f; do
   qmd="${f%.md}.qmd"
