@@ -1,6 +1,6 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix ex: <https://adafede.github.io/sparql-examples/Taxa/> .
+@prefix ex: <https://adafede.codeberg.page/sparql-examples/Taxa/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -328,7 +328,7 @@ WHERE {
 }
 ORDER BY DESC(?count)
 """;
-schema:target <https://query.wikidata.org/sparql> ;
+schema:target <https://qlever.dev/wikidata> ;
 spex:federatesWith <http://wikiba.se/ontology#mwapi> ;
 dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
 schema:keywords "taxa" ;
