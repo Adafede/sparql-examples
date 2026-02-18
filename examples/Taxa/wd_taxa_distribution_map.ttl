@@ -22,6 +22,7 @@ SELECT ?taxon_name ?map ?rgb WHERE {
   }
   ?parent ^(wdt:P171*) ?taxon .
   ?taxon wdt:P8485 ?map .
+  ?taxon wdt:P225 ?taxon_name .
   BIND(STRAFTER(STR(?taxon), "Q") AS ?idStr)
   BIND(xsd:integer(?idStr) AS ?taxonId)
   BIND(SHA1(STR(?taxonId)) AS ?hash)
