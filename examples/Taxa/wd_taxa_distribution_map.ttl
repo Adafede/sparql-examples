@@ -16,12 +16,13 @@ PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 #defaultView:Map
-SELECT * WHERE {
+SELECT ?taxon_name ?map ?rgb WHERE {
   VALUES ?parent {
     wd:Q10908
   }
   ?taxon wdt:P171* ?parent .
   ?taxon wdt:P8485 ?map .
+  ?taxon wdt:P225 ?taxon_name .
   BIND(STRAFTER(STR(?taxon), "Q") AS ?idStr)
   BIND(xsd:integer(?idStr) AS ?taxonId)
   BIND(SHA1(STR(?taxonId)) AS ?hash)
