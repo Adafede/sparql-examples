@@ -22,6 +22,7 @@ jobs:
 
     - name: Check JVM stack size
       run: java -XX:+PrintFlagsFinal -version 2>&1 | grep ThreadStackSize
-  
+
+    # Had to increase JVM stack
     - name: Run tests
       run: java -Xss8m -jar sparql-examples-utils.jar test --input-directory=examples/
