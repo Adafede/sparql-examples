@@ -1,23 +1,23 @@
+@prefix bd: <http://www.bigdata.com/rdf#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix ex: <https://adafede.codeberg.page/sparql-examples/Chemicals/> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema: <https://schema.org/> .
-@prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
-@prefix bd: <http://www.bigdata.com/rdf#> .
 @prefix p: <http://www.wikidata.org/prop/> .
 @prefix pq: <http://www.wikidata.org/prop/qualifier/> .
 @prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
 @prefix ps: <http://www.wikidata.org/prop/statement/> .
 @prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 @prefix wikibase: <http://wikiba.se/ontology#> .
 
-ex:wd_chemicals_solubility a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
-rdfs:comment "Chemicals with solubility, solvent, temperature and their units."@en ;
-sh:prefixes _:sparql_examples_prefixes ;
-sh:select """
+ex:wd_chemicals_solubility a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
+    rdfs:comment "Chemicals with solubility, solvent, temperature and their units."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wikibase: <http://wikiba.se/ontology#>
 PREFIX p: <http://www.wikidata.org/prop/>
@@ -39,9 +39,9 @@ SELECT ?item ?inchikey ?solubility ?solvent ?solventLabel ?temperature ?unit_tem
     ?statement psv:P2177/wikibase:quantityUnit ?unit_solubility.
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
 }
-""";
-schema:target <https://qlever.dev/wikidata> ;
-spex:federatesWith <http://wikiba.se/ontology#label> ;
-dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
-schema:keywords "chemicals" ;
-dc:creator "Adriano Rutz" .
+""" ;
+    schema:target <https://qlever.dev/wikidata> ;
+    spex:federatesWith <http://wikiba.se/ontology#label> ;
+    dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    schema:keywords "chemicals" ;
+    dc:creator "Adriano Rutz" .

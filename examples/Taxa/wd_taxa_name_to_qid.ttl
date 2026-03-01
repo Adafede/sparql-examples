@@ -7,18 +7,18 @@
 @prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
-ex:wd_taxa_name_to_qid a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
-rdfs:comment "Taxon name to QID."@en ;
-sh:prefixes _:sparql_examples_prefixes ;
-sh:select """
+ex:wd_taxa_name_to_qid a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
+    rdfs:comment "Taxon name to QID."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 #title: Taxon name to QID.
 SELECT ?taxon ?taxon_name WHERE {
   VALUES ?taxon_name { "Gentiana lutea" }
   ?taxon wdt:P225 ?taxon_name .
   }
-""";
-schema:target <https://qlever.dev/wikidata> ;
-dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
-schema:keywords "taxa" ;
-dc:creator "Adriano Rutz" .
+""" ;
+    schema:target <https://qlever.dev/wikidata> ;
+    dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    schema:keywords "taxa" ;
+    dc:creator "Adriano Rutz" .

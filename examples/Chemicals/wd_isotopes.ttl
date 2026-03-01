@@ -6,10 +6,10 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
-ex:wd_isotopes a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
-rdfs:comment "Elements and their isotopes"@en ;
-sh:prefixes _:sparql_examples_prefixes ;
-sh:select """
+ex:wd_isotopes a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
+    rdfs:comment "Elements and their isotopes"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 #title: Elements and their isotopes.
 SELECT DISTINCT ?element ?element_symbol ?isotope ?isotope_mass ?isotope_abundance WHERE {
@@ -19,8 +19,8 @@ SELECT DISTINCT ?element ?element_symbol ?isotope ?isotope_mass ?isotope_abundan
   ?element wdt:P246 ?element_symbol.
 }
 ORDER BY (?isotope_mass)
-""";
-schema:target <https://qlever.dev/wikidata> ;
-dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
-schema:keywords "chemicals", "isotopes" ;
-dc:creator "Adriano Rutz" .
+""" ;
+    schema:target <https://qlever.dev/wikidata> ;
+    dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    schema:keywords "chemicals" , "isotopes" ;
+    dc:creator "Adriano Rutz" .
