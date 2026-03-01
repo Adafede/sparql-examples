@@ -8,10 +8,10 @@
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:wd_taxa_distribution_map a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
-rdfs:comment "Taxa distribution map."@en ;
-sh:prefixes _:sparql_examples_prefixes ;
-sh:select """
+ex:wd_taxa_distribution_map a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
+    rdfs:comment "Taxa distribution map."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -31,8 +31,8 @@ SELECT ?taxon_name ?map ?rgb WHERE {
   BIND(SUBSTR(?hash, 5, 2) AS ?b)
   BIND(CONCAT(?r, ?g, ?b) AS ?rgb)
 }
-""";
-schema:target <https://qlever.dev/wikidata> ;
-dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
-schema:keywords "taxa" ;
-dc:creator "Adriano Rutz" .
+""" ;
+    schema:target <https://qlever.dev/wikidata> ;
+    dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    schema:keywords "taxa" ;
+    dc:creator "Adriano Rutz" .

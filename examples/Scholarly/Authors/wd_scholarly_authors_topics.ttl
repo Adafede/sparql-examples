@@ -1,3 +1,4 @@
+@prefix bd: <http://www.bigdata.com/rdf#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix ex: <https://adafede.codeberg.page/sparql-examples/Scholarly/Authors/> .
@@ -5,14 +6,13 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
-@prefix bd: <http://www.bigdata.com/rdf#> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 @prefix wikibase: <http://wikiba.se/ontology#> .
 
-ex:wd_scholarly_authors_topics a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
-rdfs:comment "Author's topic of expertise."@en ;
-sh:prefixes _:sparql_examples_prefixes ;
-sh:select """
+ex:wd_scholarly_authors_topics a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
+    rdfs:comment "Author's topic of expertise."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wikibase: <http://wikiba.se/ontology#>
 PREFIX bd: <http://www.bigdata.com/rdf#>
@@ -129,9 +129,9 @@ SELECT ?score ?topic ?topicLabel WHERE {
 }
 ORDER BY DESC (?score)
 LIMIT 36
-""";
-schema:target <https://qlever.dev/wikidata> ;
-spex:federatesWith <https://query-scholarly.wikidata.org/sparql>, <http://wikiba.se/ontology#label> ;
-dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
-schema:keywords "scholarly articles", "authors" ;
-dc:creator "Adriano Rutz" .
+""" ;
+    schema:target <https://qlever.dev/wikidata> ;
+    spex:federatesWith <https://query-scholarly.wikidata.org/sparql> , <http://wikiba.se/ontology#label> ;
+    dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    schema:keywords "scholarly articles" , "authors" ;
+    dc:creator "Adriano Rutz" .

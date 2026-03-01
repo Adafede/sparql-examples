@@ -1,17 +1,17 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix ex: <https://adafede.codeberg.page/sparql-examples/Maintenance/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix pr: <http://www.wikidata.org/prop/reference/> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
-ex:wd_maintenance_chemicals_inchikey_statements a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
-rdfs:comment "Statements no longer valid because (none of) the InChIKey(s) of the item does not correspond to the InChIKey matched for the reference."@en ;
-sh:prefixes _:sparql_examples_prefixes ;
-sh:select """
+ex:wd_maintenance_chemicals_inchikey_statements a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
+    rdfs:comment "Statements no longer valid because (none of) the InChIKey(s) of the item does not correspond to the InChIKey matched for the reference."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX pr: <http://www.wikidata.org/prop/reference/>
 PREFIX prov: <http://www.w3.org/ns/prov#>
@@ -29,8 +29,8 @@ SELECT ?item ?statement ?inchikey_item ?inchikey_ref WHERE {
     FILTER (?inchikey_item != ?inchikey_ref)
     FILTER (!REGEX(?inchikey_item, ?inchikey_ref))
 }
-""";
-schema:target <https://qlever.dev/wikidata> ;
-dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
-schema:keywords "maintenance", "chemicals" ;
-dc:creator "Adriano Rutz" .
+""" ;
+    schema:target <https://qlever.dev/wikidata> ;
+    dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    schema:keywords "maintenance" , "chemicals" ;
+    dc:creator "Adriano Rutz" .

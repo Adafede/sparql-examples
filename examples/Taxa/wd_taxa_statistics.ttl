@@ -1,19 +1,19 @@
+@prefix bd: <http://www.bigdata.com/rdf#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix ex: <https://adafede.codeberg.page/sparql-examples/Taxa/> .
+@prefix mwapi: <https://www.mediawiki.org/ontology#API/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
-@prefix bd: <http://www.bigdata.com/rdf#> .
-@prefix mwapi: <https://www.mediawiki.org/ontology#API/> .
 @prefix wikibase: <http://wikiba.se/ontology#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:wd_taxa_statistics a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
-rdfs:comment "Taxa statistics."@en ;
-sh:prefixes _:sparql_examples_prefixes ;
-sh:select """
+ex:wd_taxa_statistics a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
+    rdfs:comment "Taxa statistics."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
 PREFIX mwapi: <https://www.mediawiki.org/ontology#API/>
 PREFIX wikibase: <http://wikiba.se/ontology#>
 PREFIX bd: <http://www.bigdata.com/rdf#>
@@ -327,9 +327,9 @@ WHERE {
     }
 }
 ORDER BY DESC(?count)
-""";
-schema:target <https://qlever.dev/wikidata> ;
-spex:federatesWith <http://wikiba.se/ontology#mwapi> ;
-dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
-schema:keywords "taxa" ;
-dc:creator "Adriano Rutz" .
+""" ;
+    schema:target <https://qlever.dev/wikidata> ;
+    spex:federatesWith <http://wikiba.se/ontology#mwapi> ;
+    dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    schema:keywords "taxa" ;
+    dc:creator "Adriano Rutz" .

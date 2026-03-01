@@ -7,10 +7,10 @@
 @prefix wd: <http://www.wikidata.org/entity/> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
-ex:wd_omics a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
-rdfs:comment "Which taxa have children (or themselves) with known chemicals, genes, and proteins?"@en ;
-sh:prefixes _:sparql_examples_prefixes ;
-sh:select """
+ex:wd_omics a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
+    rdfs:comment "Which taxa have children (or themselves) with known chemicals, genes, and proteins?"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 #title: Which taxa have children (or themselves) with known chemicals, genes, and proteins?
@@ -54,8 +54,8 @@ SELECT ?taxon (COUNT(DISTINCT ?g) AS ?genome) (COUNT(DISTINCT ?m) AS ?metabolome
 }
 GROUP BY ?taxon
 HAVING (((?genome > 0 ) && (?metabolome > 0 )) && (?proteome > 0 ))
-""";
-schema:target <https://qlever.dev/wikidata> ;
-dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
-schema:keywords "omics" ;
-dc:creator "Adriano Rutz" .
+""" ;
+    schema:target <https://qlever.dev/wikidata> ;
+    dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    schema:keywords "omics" ;
+    dc:creator "Adriano Rutz" .
