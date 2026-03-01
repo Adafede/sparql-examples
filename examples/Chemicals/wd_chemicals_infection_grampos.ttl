@@ -7,10 +7,10 @@
 @prefix wd: <http://www.wikidata.org/entity/> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
-ex:wd_chemicals_infection_grampos a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
-rdfs:comment "Chemicals treating Gram-positive infections."@en ;
-sh:prefixes _:sparql_examples_prefixes ;
-sh:select """
+ex:wd_chemicals_infection_grampos a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
+    rdfs:comment "Chemicals treating Gram-positive infections."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 #title: What are the chemicals known to treat gram-positive infections (Q55789782)?
@@ -25,8 +25,8 @@ SELECT DISTINCT ?structure ?structure_smiles WHERE {
     { ?infection wdt:P2176 ?structure. }
     ?structure wdt:P233 ?structure_smiles.
 }
-""";
-schema:target <https://qlever.dev/wikidata> ;
-dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
-schema:keywords "chemicals", "antibiotics" ;
-dc:creator "Adriano Rutz" .
+""" ;
+    schema:target <https://qlever.dev/wikidata> ;
+    dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    schema:keywords "chemicals" , "antibiotics" ;
+    dc:creator "Adriano Rutz" .

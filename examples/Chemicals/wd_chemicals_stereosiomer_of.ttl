@@ -6,17 +6,17 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
-ex:wd_chemicals_stereosiomer_of a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
-rdfs:comment "Which pairs of stereoisomers are present on Wikidata?"@en ;
-sh:prefixes _:sparql_examples_prefixes ;
-sh:select """
+ex:wd_chemicals_stereosiomer_of a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
+    rdfs:comment "Which pairs of stereoisomers are present on Wikidata?"@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 #title: Which pairs of stereoisomers are present on Wikidata?
 SELECT ?structure_1 ?structure_2 WHERE {
     ?structure_1 wdt:P3364 ?structure_2.
 }
-""";
-schema:target <https://qlever.dev/wikidata> ;
-dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
-schema:keywords "chemicals" ;
-dc:creator "Adriano Rutz" .
+""" ;
+    schema:target <https://qlever.dev/wikidata> ;
+    dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    schema:keywords "chemicals" ;
+    dc:creator "Adriano Rutz" .

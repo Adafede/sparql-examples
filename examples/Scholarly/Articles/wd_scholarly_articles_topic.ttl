@@ -1,20 +1,20 @@
+@prefix bd: <http://www.bigdata.com/rdf#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix ex: <https://adafede.codeberg.page/sparql-examples/Scholarly/Articles/> .
+@prefix mwapi: <https://www.mediawiki.org/ontology#API/> .
+@prefix p: <http://www.wikidata.org/prop/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
-@prefix bd: <http://www.bigdata.com/rdf#> .
-@prefix mwapi: <https://www.mediawiki.org/ontology#API/> .
-@prefix p: <http://www.wikidata.org/prop/> .
 @prefix wdt: <http://www.wikidata.org/prop/direct/> .
 @prefix wikibase: <http://wikiba.se/ontology#> .
 
-ex:wd_scholarly_articles_topic a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
-rdfs:comment "Scholarly articles containing 'quassin' (Q2079986) in title."@en ;
-sh:prefixes _:sparql_examples_prefixes ;
-sh:select """
+ex:wd_scholarly_articles_topic a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
+    rdfs:comment "Scholarly articles containing 'quassin' (Q2079986) in title."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
 PREFIX mwapi: <https://www.mediawiki.org/ontology#API/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wikibase: <http://wikiba.se/ontology#>
@@ -32,9 +32,9 @@ SELECT ?article ?article_title WHERE {
   SERVICE <https://query-scholarly.wikidata.org/sparql> { ?article wdt:P1476 ?article_title. }
   FILTER(CONTAINS(LCASE(STR(?article_title)), "quassin"))
 }
-""";
-schema:target <https://qlever.dev/wikidata> ;
-spex:federatesWith <https://query-scholarly.wikidata.org/sparql>, <http://wikiba.se/ontology#mwapi> ;
-dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
-schema:keywords "scholarly articles" ;
-dc:creator "Adriano Rutz" .
+""" ;
+    schema:target <https://qlever.dev/wikidata> ;
+    spex:federatesWith <https://query-scholarly.wikidata.org/sparql> , <http://wikiba.se/ontology#mwapi> ;
+    dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    schema:keywords "scholarly articles" ;
+    dc:creator "Adriano Rutz" .
