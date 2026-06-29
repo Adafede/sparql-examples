@@ -24,7 +24,7 @@ jobs:
           java-version: '21'
 
       - name: Install sparql-examples-utils
-        run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.23/sparql-examples-utils-2.0.23-uber.jar" -O sparql-examples-utils-uber.jar
+        run: wget "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.24/sparql-examples-utils-2.0.24-uber.jar" -O sparql-examples-utils-uber.jar
 
       - name: Generate markdown
         run: java -jar sparql-examples-utils-uber.jar convert -i examples/ -m
