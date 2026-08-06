@@ -33,7 +33,7 @@ SELECT ?article ?article_title WHERE {
   FILTER(CONTAINS(LCASE(STR(?article_title)), "quassin"))
 }
 """ ;
-    schema:target <https://qlever.dev/wikidata> ;
+    schema:target <https://query.wikidata.org/sparql> ;
     spex:federatesWith <https://query-scholarly.wikidata.org/sparql> , <http://wikiba.se/ontology#mwapi> ;
     dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
     schema:keywords "scholarly articles" ;
