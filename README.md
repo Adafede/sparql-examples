@@ -9,6 +9,46 @@ Each SPARQL query is itself in a turtle file. We use the following ontologies fo
 * RDF for basic type relations
 * schema.org for the target SPARQL endpoint and tagging relevant keywords
 
+## Having examples for your own endpoints
+
+Use the [sparql-examples template](https://github.com/sib-swiss/sparql-examples-template) to create a new repository for examples of your own endpoints. Fork this repository and open a pull request if you want to contribute to the SIB SPARQL examples.
+
+## What it looks like
+
+The following illustrates an example to retrieve human enzymes that metabolize sphingolipids from the UniProt SPARQL endpoint, with a service call to Rhea endpoint.
+
+```turtle
+@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> . # <!-- change per dataset
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
+
+ex:040 # <!-- UniProt, Rhea and Swiss-Lipids are numbered but this can be anything.
+	a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
+    rdfs:comment "Retrieve human enzymes that metabolize sphingolipids and are annotated in ChEMBL"@en ;
+    sh:prefixes _:sparql_examples_prefixes ; # <!-- required for the import of the prefix declarations. Note the blank node
+    sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rh: <http://rdf.rhea-db.org/>
+PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
+PREFIX up: <http://purl.uniprot.org/core/>
+
+SELECT DISTINCT ?protein ?chemblEntry WHERE {
+  SERVICE <https://sparql.rhea-db.org/sparql> {
+    ?rhea rdfs:subClassOf rh:Reaction ;
+      rh:side/rh:contains/rh:compound/rh:chebi/rdfs:subClassOf+ CHEBI:26739 .
+  }
+  ?protein up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea ;
+    up:organism taxon:9606 ;
+    rdfs:seeAlso ?chemblEntry .
+  ?chemblEntry up:database <http://purl.uniprot.org/database/ChEMBL> .
+}""" ;
+    schema:keywords "enzyme" ;
+    schema:target <https://sparql.uniprot.org/sparql/> ;
+    spex:federatesWith <https://sparql.rhea-db.org/sparql> .
+```
+
 ## Artifact generation and quality assurance
 
 We use the [SIB SPARQL Examples utils](https://github.com/sib-swiss/sparql-examples-utils/) for testing and generating artifacts.
@@ -105,6 +145,18 @@ If you reuse any part of this work, please cite [the GigaScience paper](https://
     month = {10},
     title = {A large collection of bioinformatics question-query pairs over federated knowledge graphs: methodology and applications},
     url = {https://github.com/sib-swiss/sparql-examples-utils},
-    year = {2024}
+    year = {2025}
 }
 ```
+
+## How to test github page rendering
+
+```sh
+docker build -t sparql-examples .
+docker run --rm  -v "$PWD":/srv/jekyll sparql-examples bundler exec jekyll build --watch &
+python3 -m http.server 8792 --directory _site
+```
+Build a local docker image that has the right Jekyll version and use that to build the webpages.
+Then serve that with the python3 inbuild basic http server.
+Open a browser locally at `http://localhost:8792/` to see the rendered HTML
+
