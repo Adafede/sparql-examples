@@ -1,36 +1,31 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix ex: <https://adafede.codeberg.page/sparql-examples/Maintenance/> .
-@prefix pr: <http://www.wikidata.org/prop/reference/> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix ex: <https://adafede.github.io/sparql-examples/examples/Maintenance/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
 ex:wd_maintenance_chemicals_inchikey_statements a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
-    rdfs:comment "Statements no longer valid because (none of) the InChIKey(s) of the item does not correspond to the InChIKey matched for the reference."@en ;
+    rdfs:comment "Statements no longer valid because none of the InChIKey(s) of the item correspond to the InChIKey matched for the reference."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """
-PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX pr: <http://www.wikidata.org/prop/reference/>
 PREFIX prov: <http://www.w3.org/ns/prov#>
-#title: Statements no longer valid because (none of) the InChIKey(s) of the item does not correspond to the InChIKey matched for the reference.
-SELECT ?item ?statement ?inchikey_item ?inchikey_ref WHERE {
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+#title: Statements no longer valid because none of the InChIKey(s) of the item correspond to the InChIKey matched for the reference
+SELECT ?item ?statement (GROUP_CONCAT(DISTINCT ?ii; SEPARATOR = " ") AS ?inchikey_item) ?inchikey_ref WHERE {
     {
-        SELECT ?item ?statement (GROUP_CONCAT(?ii; SEPARATOR = " ") AS ?inchikey_item) ?inchikey_ref WHERE {
-            ?statement prov:wasDerivedFrom ?prov.
-            ?prov pr:P235 ?inchikey_ref.
-            ?item ?p ?statement.
-            ?item wdt:P235 ?ii.
+        SELECT ?item ?statement ?inchikey_ref WHERE {
+            ?statement prov:wasDerivedFrom/pr:P235 ?inchikey_ref .
+            ?item ?p ?statement .
+            MINUS { ?item wdt:P235 ?inchikey_ref . }
         }
-        GROUP BY ?item ?statement ?inchikey_ref
     }
-    FILTER (?inchikey_item != ?inchikey_ref)
-    FILTER (!REGEX(?inchikey_item, ?inchikey_ref))
+    OPTIONAL { ?item wdt:P235 ?ii . }
 }
+GROUP BY ?item ?statement ?inchikey_ref
 """ ;
-    schema:target <https://qlever.dev/wikidata> ;
+    schema:target <https://qlever.dev/api/wikidata> ;
     dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
     schema:keywords "maintenance" , "chemicals" ;
     dc:creator "Adriano Rutz" .

@@ -1,6 +1,6 @@
 # SPARQL examples
 
-A personal collection of SPARQL query examples curated by Adriano Rutz, primarily targeting [QLever Wikidata](https://qlever.dev/wikidata), [Wikidata Query Service](https://query.wikidata.org/sparql), and the [Wikidata Scholarly endpoint](https://query-scholarly.wikidata.org/sparql).
+A personal collection of SPARQL query examples curated by Adriano Rutz, primarily targeting [QLever Wikidata](https://qlever.dev/api/wikidata), [Wikidata Query Service](https://query.wikidata.org/sparql), and the [Wikidata Scholarly endpoint](https://query-scholarly.wikidata.org/sparql).
 
 Browse the rendered examples with client-side search, keyword filtering, and Mermaid query diagrams at **<https://adafede.github.io/sparql-examples/>**.
 
@@ -22,25 +22,23 @@ Each `.ttl` file describes a `sh:SPARQLExecutable` with its query text, target e
 ```turtle
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix ex: <https://adafede.codeberg.page/sparql-examples/Taxa/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/examples/Taxa/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
-@prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
 ex:wd_taxa_name_to_qid a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
     rdfs:comment "Taxon name to QID."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-#title: Taxon name to QID.
+#title: Taxon name to QID
 SELECT ?taxon ?taxon_name WHERE {
-  VALUES ?taxon_name { "Gentiana lutea" }
-  ?taxon wdt:P225 ?taxon_name .
-  }
+    VALUES ?taxon_name { "Gentiana lutea" }
+    ?taxon wdt:P225 ?taxon_name .
+}
 """ ;
-    schema:target <https://qlever.dev/wikidata> ;
+    schema:target <https://qlever.dev/api/wikidata> ;
     dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
     schema:keywords "taxa" ;
     dc:creator "Adriano Rutz" .

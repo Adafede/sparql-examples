@@ -1,12 +1,9 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix ex: <https://adafede.codeberg.page/sparql-examples/Taxa/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/examples/Taxa/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix wd: <http://www.wikidata.org/entity/> .
-@prefix wdt: <http://www.wikidata.org/prop/direct/> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:wd_taxa_distribution_map a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
     rdfs:comment "Taxa distribution map."@en ;
@@ -14,25 +11,18 @@ ex:wd_taxa_distribution_map a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
     sh:select """
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 #defaultView:Map
-SELECT ?taxon_name ?map ?rgb WHERE {
-  VALUES ?parent {
-    wd:Q10908
-  }
-  ?parent ^(wdt:P171*) ?taxon .
-  ?taxon wdt:P8485 ?map .
-  ?taxon wdt:P225 ?taxon_name .
-  BIND(STRAFTER(STR(?taxon), "Q") AS ?idStr)
-  BIND(xsd:integer(?idStr) AS ?taxonId)
-  BIND(SHA1(STR(?taxonId)) AS ?hash)
-  BIND(SUBSTR(?hash, 1, 2) AS ?r)
-  BIND(SUBSTR(?hash, 3, 2) AS ?g)
-  BIND(SUBSTR(?hash, 5, 2) AS ?b)
-  BIND(CONCAT(?r, ?g, ?b) AS ?rgb)
+SELECT ?taxon ?taxon_name ?map ?rgb WHERE {
+    VALUES ?parent {
+        wd:Q10908
+    }
+    ?parent ^(wdt:P171*) ?taxon .
+    ?taxon wdt:P8485 ?map ;
+           wdt:P225 ?taxon_name .
+    BIND(SUBSTR(SHA1(STR(?taxon)), 1, 6) AS ?rgb)
 }
 """ ;
-    schema:target <https://qlever.dev/wikidata> ;
+    schema:target <https://qlever.dev/api/wikidata> ;
     dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
     schema:keywords "taxa" ;
     dc:creator "Adriano Rutz" .

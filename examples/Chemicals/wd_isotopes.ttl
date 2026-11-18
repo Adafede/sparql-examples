@@ -1,26 +1,25 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix ex: <https://adafede.codeberg.page/sparql-examples/Chemicals/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/examples/Chemicals/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
 ex:wd_isotopes a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
-    rdfs:comment "Elements and their isotopes"@en ;
+    rdfs:comment "Elements and their isotopes."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-#title: Elements and their isotopes.
+#title: Elements and their isotopes
 SELECT DISTINCT ?element ?element_symbol ?isotope ?isotope_mass ?isotope_abundance WHERE {
-  ?isotope wdt:P2374 ?isotope_abundance;
-    wdt:P2067 ?isotope_mass;
-    wdt:P279 ?element.
-  ?element wdt:P246 ?element_symbol.
+    ?isotope wdt:P2374 ?isotope_abundance ;
+             wdt:P2067 ?isotope_mass ;
+             wdt:P279 ?element .
+    ?element wdt:P246 ?element_symbol .
 }
-ORDER BY (?isotope_mass)
+ORDER BY ?isotope_mass
 """ ;
-    schema:target <https://qlever.dev/wikidata> ;
+    schema:target <https://qlever.dev/api/wikidata> ;
     dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
     schema:keywords "chemicals" , "isotopes" ;
     dc:creator "Adriano Rutz" .

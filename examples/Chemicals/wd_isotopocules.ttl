@@ -1,10 +1,9 @@
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix ex: <https://adafede.codeberg.page/sparql-examples/Chemicals/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/examples/Chemicals/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
 ex:wd_isotopocules a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
     rdfs:comment "Which structures are isotopically-labeled ones?"@en ;
@@ -12,12 +11,12 @@ ex:wd_isotopocules a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
     sh:select """
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 #title: Which structures are isotopically-labeled ones?
-SELECT ?structure WHERE {
-    ?structure wdt:P234 ?inchi.
-    FILTER(REGEX(STR(?inchi), "/i"))
+SELECT ?structure ?inchi WHERE {
+    ?structure wdt:P234 ?inchi .
+    FILTER(CONTAINS(?inchi, "/i"))
 }
 """ ;
-    schema:target <https://qlever.dev/wikidata> ;
+    schema:target <https://qlever.dev/api/wikidata> ;
     dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
     schema:keywords "chemicals" , "isotopes" ;
     dc:creator "Adriano Rutz" .

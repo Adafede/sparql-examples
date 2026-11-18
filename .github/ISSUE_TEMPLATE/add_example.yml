@@ -40,7 +40,7 @@ body:
       label: Select the target SPARQL endpoint(s)
       description: Choose one or more SPARQL endpoints from the list, and/or use the custom field below.
       options:
-        - label: "https://qlever.dev/wikidata"
+        - label: "https://qlever.dev/api/wikidata"
         - label: "https://query.wikidata.org/sparql"
         - label: "https://query-scholarly.wikidata.org/sparql"
 

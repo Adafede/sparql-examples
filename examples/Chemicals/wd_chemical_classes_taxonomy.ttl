@@ -1,25 +1,19 @@
-@prefix bd: <http://www.bigdata.com/rdf#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix ex: <https://adafede.codeberg.page/sparql-examples/Chemicals/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/examples/Chemicals/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
-@prefix wd: <http://www.wikidata.org/entity/> .
-@prefix wdt: <http://www.wikidata.org/prop/direct/> .
-@prefix wikibase: <http://wikiba.se/ontology#> .
 
 ex:wd_chemical_classes_taxonomy a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
     rdfs:comment "Chemical classes taxonomy."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-PREFIX wikibase: <http://wikiba.se/ontology#>
-PREFIX bd: <http://www.bigdata.com/rdf#>
 #title: Chemical classes taxonomy
-SELECT * WHERE {
+SELECT DISTINCT ?class ?classLabel ?parent ?parentLabel WHERE {
     VALUES ?instance {
         wd:Q15711994 # group of isomeric entities
         wd:Q17339814 # group or class of chemical substances
@@ -32,13 +26,21 @@ SELECT * WHERE {
         wd:Q72070508 # group or class of chemical entities
         wd:Q74892521 # imprecise class of chemical entities
     }
-    ?class wdt:P31 ?instance.
-    OPTIONAL { ?class wdt:P279 ?parent. }
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
+    ?class wdt:P31 ?instance .
+    OPTIONAL {
+        ?class rdfs:label ?classLabel .
+        FILTER(LANG(?classLabel) = "en")
+    }
+    OPTIONAL {
+        ?class wdt:P279 ?parent .
+        OPTIONAL {
+            ?parent rdfs:label ?parentLabel .
+            FILTER(LANG(?parentLabel) = "en")
+        }
+    }
 }
 """ ;
-    schema:target <https://query.wikidata.org/sparql> ;
-    spex:federatesWith <http://wikiba.se/ontology#label> ;
+    schema:target <https://qlever.dev/api/wikidata> ;
     dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
     schema:keywords "chemical classes" ;
     dc:creator "Adriano Rutz" .

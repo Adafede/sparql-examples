@@ -1,79 +1,70 @@
-@prefix bd: <http://www.bigdata.com/rdf#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix ex: <https://adafede.codeberg.page/sparql-examples/Chemicals/> .
-@prefix mwapi: <https://www.mediawiki.org/ontology#API/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/examples/Chemicals/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
-@prefix wikibase: <http://wikiba.se/ontology#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:wd_chemicals_statistics a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
     rdfs:comment "Chemicals statistics."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """
-PREFIX bd: <http://www.bigdata.com/rdf#>
-PREFIX mwapi: <https://www.mediawiki.org/ontology#API/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wikibase: <http://wikiba.se/ontology#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-SELECT
-(xsd:integer(?count_) AS ?count)
-(CONCAT("Total chemicals with ", ?description_) AS ?description)
-WHERE {
-    BIND("haswbstatement:P31=Q113145171|P31=Q59199015" AS ?constraint)
-    VALUES (?description_ ?property_query_term) {
-        ("or without stereochemistry" "")
-        ("fully defined stereochemistry" "P31=Q113145171")
-        ("undefined stereochemistry" "P31=Q59199015")
-        ("CAS registry number" "P231")
-        ("canonical SMILES" "P233")
-        ("InChI" "P234")
-        ("InChIKey" "P235")
-        ("chemical formula" "P274")
-    # ("ChEMBL ID" "P592") # limit IDs
-    # ("ChemSpider ID" "P661") # limit IDs
-        ("PubChem ID" "P662")
-    # ("KEGG ID" "P665") # limit IDs
-        ("ChEBI ID" "P683")
-        ("found in taxon" "P703")
-        ("isomeric SMILES" "P2017")
-    # ("ZINC ID" "P2084") # limit IDs
-        ("crystal structure" "haswbstatement:P3636|P11375")
-        ("safety classification and labelling" "P4952")
-        ("mass spectrum" "haswbstatement:P4964|P6689")
-    # ("SMARTS notation" "P8533") # not for now
-        ("NMR spectrum" "P9405")
-    # hacky way to get quantity properties.
-        ("pKa" "linksto:Property:P1117")
-        ("mass" "linksto:Property:P2067")
-        ("solubility" "linksto:Property:P2177")
-        ("melting point" "linksto:Property:P2101")
-        ("boiling point" "linksto:Property:P2102")
-        ("electric dipole moment" "linksto:Property:P2201")
-        ("ionization energy" "linksto:Property:P2260")
-    # ("minimum explosive concentration" "linksto:Property:P2204") # safety
-    # ("time-weighted average exposure limit" "linksto:Property:P2404") # safety
-    # ("ceiling exposure limit" "linksto:Property:P2405") # safety
-    # ("maximum peak exposure limit" "linksto:Property:P2406") # safety
-    # ("short-term exposure limit" "linksto:Property:P2407") # safety
-    # ("solubility product constant" "linksto:Property:P11813") # less than 5 statements
+#title: Chemicals statistics
+SELECT ?count ?description WHERE {
+    {
+        SELECT (COUNT(DISTINCT ?item) AS ?count) ?description WHERE {
+            VALUES ?chem_class { wd:Q113145171 wd:Q59199015 }
+            ?item wdt:P31 ?chem_class .
+            BIND("Total chemicals with or without stereochemistry" AS ?description)
+        }
+        GROUP BY ?description
     }
-    BIND(CONCAT(?property_query_term, " ", ?constraint) AS ?search_query)
-    SERVICE wikibase:mwapi {
-        bd:serviceParam wikibase:endpoint "www.wikidata.org" ;
-        wikibase:api "Search" ;
-        wikibase:limit "once" ;
-        mwapi:srsearch ?search_query;
-        mwapi:srlimit "1".
-        ?count_ wikibase:apiOutput "//searchinfo[1]/@totalhits".
+    UNION
+    {
+        SELECT (COUNT(DISTINCT ?item) AS ?count) ?description WHERE {
+            ?item wdt:P31 wd:Q113145171 .
+            BIND("Total chemicals with fully defined stereochemistry" AS ?description)
+        }
+        GROUP BY ?description
+    }
+    UNION
+    {
+        SELECT (COUNT(DISTINCT ?item) AS ?count) ?description WHERE {
+            ?item wdt:P31 wd:Q59199015 .
+            BIND("Total chemicals with undefined stereochemistry" AS ?description)
+        }
+        GROUP BY ?description
+    }
+    UNION
+    {
+        SELECT ?count (CONCAT("Total chemicals with ", ?propLabel) AS ?description) WHERE {
+            {
+                SELECT ?p (COUNT(DISTINCT ?item) AS ?count) WHERE {
+                    VALUES ?chem_class { wd:Q113145171 wd:Q59199015 }
+                    ?item wdt:P31 ?chem_class ;
+                          ?p [] .
+                }
+                GROUP BY ?p
+            }
+            VALUES ?p {
+                wdt:P231 wdt:P233 wdt:P234 wdt:P235 wdt:P274 wdt:P592 wdt:P661 wdt:P662
+                wdt:P665 wdt:P683 wdt:P703 wdt:P1117 wdt:P2017 wdt:P2067 wdt:P2084
+                wdt:P2101 wdt:P2102 wdt:P2177 wdt:P2201 wdt:P2260 wdt:P3636 wdt:P4952
+                wdt:P4964 wdt:P6689 wdt:P8533 wdt:P9405 wdt:P11375
+            }
+            ?prop wikibase:directClaim ?p ;
+                  rdfs:label ?propLabel .
+            FILTER(LANG(?propLabel) = "en")
+        }
     }
 }
 ORDER BY DESC(?count)
 """ ;
-    schema:target <https://query.wikidata.org/sparql> ;
-    spex:federatesWith <http://wikiba.se/ontology#mwapi> ;
+    schema:target <https://qlever.dev/api/wikidata> ;
     dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
     schema:keywords "chemicals" ;
     dc:creator "Adriano Rutz" .

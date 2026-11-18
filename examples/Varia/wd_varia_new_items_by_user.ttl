@@ -1,40 +1,36 @@
-@prefix bd: <http://www.bigdata.com/rdf#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix ex: <https://adafede.codeberg.page/sparql-examples/Varia/> .
-@prefix hint: <http://www.bigdata.com/queryHints#> .
-@prefix mwapi: <https://www.mediawiki.org/ontology#API/> .
+@prefix ex: <https://adafede.github.io/sparql-examples/examples/Varia/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
-@prefix wikibase: <http://wikiba.se/ontology#> .
 
 ex:wd_varia_new_items_by_user a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
     rdfs:comment "New items by user."@en ;
     sh:prefixes _:sparql_examples_prefixes ;
     sh:select """
-PREFIX mwapi: <https://www.mediawiki.org/ontology#API/>
-PREFIX wikibase: <http://wikiba.se/ontology#>
 PREFIX bd: <http://www.bigdata.com/rdf#>
 PREFIX hint: <http://www.bigdata.com/queryHints#>
-#title: Latest itmes by a user 
+PREFIX mwapi: <https://www.mediawiki.org/ontology#API/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+#title: Latest items by a user
 SELECT ?title ?titleLabel WHERE {
-  hint:Query hint:optimizer "None".
-  SERVICE wikibase:mwapi {
-     bd:serviceParam wikibase:endpoint "www.wikidata.org";
-                     wikibase:api "Generator";
-                     mwapi:generator "recentchanges";
-                     mwapi:grcnamespace "0";
-                     mwapi:grctype "new";
-                     mwapi:grcuser "Ainali";
-                     .
-     ?title wikibase:apiOutputItem mwapi:title. 
-  } 
-FILTER BOUND (?title)
-SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
+    hint:Query hint:optimizer "None" .
+    SERVICE wikibase:mwapi {
+        bd:serviceParam wikibase:endpoint "www.wikidata.org" ;
+                        wikibase:api "Generator" ;
+                        mwapi:generator "recentchanges" ;
+                        mwapi:grcnamespace "0" ;
+                        mwapi:grctype "new" ;
+                        mwapi:grcuser "Ainali" .
+        ?title wikibase:apiOutputItem mwapi:title .
+    }
+    FILTER(BOUND(?title))
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en" . }
 }
-ORDER BY DESC(?title)
+ORDER BY DESC(xsd:integer(STRAFTER(STR(?title), "Q")))
 """ ;
     schema:target <https://query.wikidata.org/sparql> ;
     spex:federatesWith <http://wikiba.se/ontology#mwapi> , <http://wikiba.se/ontology#label> ;
