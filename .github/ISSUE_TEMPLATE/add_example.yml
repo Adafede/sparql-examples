@@ -30,7 +30,7 @@ body:
     attributes:
       label: Query file path
       description: Provide the desired file path for your query within the repository examples folder.
-      placeholder: "UniProt/001.ttl"
+      placeholder: "Chemicals/wd_example.ttl"
     validations:
       required: true
 
@@ -40,15 +40,9 @@ body:
       label: Select the target SPARQL endpoint(s)
       description: Choose one or more SPARQL endpoints from the list, and/or use the custom field below.
       options:
-        - label: "https://sparql.uniprot.org/sparql"
-        - label: "https://www.bgee.org/sparql/"
-        - label: "https://sparql.omabrowser.org/sparql/"
-        - label: "https://sparql.rhea-db.org/sparql/"
-        - label: "https://sparql.cellosaurus.org/sparql"
-        - label: "https://kg.earthmetabolome.org/metrin/api/"
-        - label: "https://sparql.orthodb.org/sparql/"
-        - label: "https://rdf.metanetx.org/sparql/"
-        - label: "https://hamap.expasy.org/sparql/"
+        - label: "https://qlever.dev/wikidata"
+        - label: "https://query.wikidata.org/sparql"
+        - label: "https://query-scholarly.wikidata.org/sparql"
 
   - type: textarea
     id: custom_sparql_endpoints

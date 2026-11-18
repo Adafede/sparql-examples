@@ -51,12 +51,31 @@
           {% if site.github.is_project_page %}
           Source and contributions on <a href="{{ site.github.repository_url }}">GitHub <small>{{ site.github.repository_nwo }}</small></a>.
           {% endif %}
+          All examples as Turtle: <a href="{{ '/all.ttl' | relative_url }}">all.ttl</a>.
+          Built with <a href="https://github.com/sib-swiss/sparql-examples-template">SIB SPARQL Examples Template</a> &amp; <a href="https://github.com/sib-swiss/sparql-examples-utils">Utils</a>.
         </p>
+        <div style="display: flex; justify-content: center; margin-top: 0.75rem;">
+          <a href="https://www.simpleanalytics.com?utm_source=adafede.github.io&utm_content=badge" referrerpolicy="origin" target="_blank" rel="noopener noreferrer">
+            <picture>
+              <source
+                srcset="https://simpleanalyticsbadges.com/adafede.github.io?mode=dark&counter=false&radius=10&background-dark=0a0f19&text-dark=b8c5d6&logo-dark=d69999"
+                media="(prefers-color-scheme: dark)"
+              />
+              <img
+                src="https://simpleanalyticsbadges.com/adafede.github.io?mode=light&counter=false&radius=10&background-light=f7fafc&text-light=4a5a6d&logo-light=990000"
+                alt="Simple Analytics" width="118" height="28" loading="lazy"
+                referrerpolicy="no-referrer"
+                crossorigin="anonymous"
+              />
+            </picture>
+          </a>
+        </div>
       </div>
     </footer>
 
     {% include mermaid.html %}
     {% include examples-table.html %}
     {% include search.html %}
+    {% include analytics.html %}
   </body>
 </html>

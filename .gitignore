@@ -1,4 +1,5 @@
 /target/
+/all.ttl
 /examples_*.ttl
 /examples/**/*.rq
 /examples/**/*.md
@@ -8,6 +9,5 @@
 .classpath
 .settings/
 *.jar
-
-/.quarto/
-**/*.quarto_ipynb
+.DS_Store
+/examples/void-statistics*

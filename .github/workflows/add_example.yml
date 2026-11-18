@@ -17,7 +17,7 @@ jobs:
 
     steps:
     - name: Check out repository
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
 
     - name: Set up Java
       uses: actions/setup-java@v5
@@ -39,12 +39,10 @@ jobs:
       env:
         GITHUB_ISSUE_BODY: ${{ github.event.issue.body }}
 
-
     - name: Validate generated SPARQL query example
       id: validate
       if: success()
-      run: java -jar sparql-examples-utils.jar test -i ./examples -p tmp --also-run-slow-tests > error.log 2>&1
-
+      run: java -Xss8m -jar sparql-examples-utils.jar test -i ./examples -p tmp --also-run-slow-tests > error.log 2>&1
 
     - name: Clean up temporary files
       if: success()

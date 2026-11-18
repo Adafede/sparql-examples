@@ -1,162 +1,80 @@
 # SPARQL examples
 
-This is a collection of SPARQL examples usable on different SIB related SPARQL endpoints or datasets. The examples are stored one query per file in project specific repositories in the [examples](https://github.com/sib-swiss/sparql-examples/tree/master/examples) folder.
+A personal collection of SPARQL query examples curated by Adriano Rutz, primarily targeting [QLever Wikidata](https://qlever.dev/wikidata), [Wikidata Query Service](https://query.wikidata.org/sparql), and the [Wikidata Scholarly endpoint](https://query-scholarly.wikidata.org/sparql).
 
-Each SPARQL query is itself in a turtle file. We use the following ontologies for the basic concepts.
+Browse the rendered examples with client-side search, keyword filtering, and Mermaid query diagrams at **<https://adafede.github.io/sparql-examples/>**.
 
-* ShACL for the relation to the text of the Select/Ask queries, and declaring prefixes
-* RDFS for comments and labels as shown in the user interfaces, annotated with a language tag
-* RDF for basic type relations
-* schema.org for the target SPARQL endpoint and tagging relevant keywords
+## Organization
 
-## Having examples for your own endpoints
+Queries are stored one per Turtle (`.ttl`) file inside [`examples/`](./examples/) using SHACL, RDFS, and Schema.org annotations:
 
-Use the [sparql-examples template](https://github.com/sib-swiss/sparql-examples-template) to create a new repository for examples of your own endpoints. Fork this repository and open a pull request if you want to contribute to the SIB SPARQL examples.
+* [`examples/Chemicals/`](./examples/Chemicals/) — chemical structures, classes, identifiers, SMILES, InChIKeys, physicochemical properties, stereoisomers, and isotopes
+* [`examples/Maintenance/`](./examples/Maintenance/) — data-quality, orphan-entity, and statement-completeness queries
+* [`examples/Omics/`](./examples/Omics/) — metabolomics and omics dataset queries
+* [`examples/Scholarly/`](./examples/Scholarly/) — scholarly literature (`Articles/`) and researcher (`Authors/`) queries
+* [`examples/Taxa/`](./examples/Taxa/) — biological taxonomy, name-to-QID lookup, and distribution maps
+* [`examples/Varia/`](./examples/Varia/) — miscellaneous Wikidata queries
 
-## What it looks like
+## Example format
 
-The following illustrates an example to retrieve human enzymes that metabolize sphingolipids from the UniProt SPARQL endpoint, with a service call to Rhea endpoint.
+Each `.ttl` file describes a `sh:SPARQLExecutable` with its query text, target endpoint(s), keywords, creator, and license:
 
 ```turtle
-@prefix ex: <https://sparql.uniprot.org/.well-known/sparql-examples/> . # <!-- change per dataset
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ex: <https://adafede.codeberg.page/sparql-examples/Taxa/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix spex:<https://purl.expasy.org/sparql-examples/ontology#> .
+@prefix spex: <https://purl.expasy.org/sparql-examples/ontology#> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
 
-ex:040 # <!-- UniProt, Rhea and Swiss-Lipids are numbered but this can be anything.
-	a sh:SPARQLExecutable, sh:SPARQLSelectExecutable ;
-    rdfs:comment "Retrieve human enzymes that metabolize sphingolipids and are annotated in ChEMBL"@en ;
-    sh:prefixes _:sparql_examples_prefixes ; # <!-- required for the import of the prefix declarations. Note the blank node
-    sh:select """PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rh: <http://rdf.rhea-db.org/>
-PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
-PREFIX up: <http://purl.uniprot.org/core/>
-
-SELECT DISTINCT ?protein ?chemblEntry WHERE {
-  SERVICE <https://sparql.rhea-db.org/sparql> {
-    ?rhea rdfs:subClassOf rh:Reaction ;
-      rh:side/rh:contains/rh:compound/rh:chebi/rdfs:subClassOf+ CHEBI:26739 .
+ex:wd_taxa_name_to_qid a sh:SPARQLExecutable , sh:SPARQLSelectExecutable ;
+    rdfs:comment "Taxon name to QID."@en ;
+    sh:prefixes _:sparql_examples_prefixes ;
+    sh:select """
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+#title: Taxon name to QID.
+SELECT ?taxon ?taxon_name WHERE {
+  VALUES ?taxon_name { "Gentiana lutea" }
+  ?taxon wdt:P225 ?taxon_name .
   }
-  ?protein up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea ;
-    up:organism taxon:9606 ;
-    rdfs:seeAlso ?chemblEntry .
-  ?chemblEntry up:database <http://purl.uniprot.org/database/ChEMBL> .
-}""" ;
-    schema:keywords "enzyme" ;
-    schema:target <https://sparql.uniprot.org/sparql/> ;
-    spex:federatesWith <https://sparql.rhea-db.org/sparql> .
+""" ;
+    schema:target <https://qlever.dev/wikidata> ;
+    dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
+    schema:keywords "taxa" ;
+    dc:creator "Adriano Rutz" .
 ```
 
-## Artifact generation and quality assurance
+## Quality assurance & artifact generation
 
-We use the [SIB SPARQL Examples utils](https://github.com/sib-swiss/sparql-examples-utils/) for testing and generating artifacts.
-
-First, download the jar file with:
+Validation and static-page Markdown/RQ/Turtle generation use [SIB SPARQL Examples Utils](https://github.com/sib-swiss/sparql-examples-utils):
 
 ```bash
-wget -O sparql-examples-utils.jar 'https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.19/sparql-examples-utils-2.0.19-uber.jar'
+wget -O sparql-examples-utils.jar "https://github.com/sib-swiss/sparql-examples-utils/releases/download/v2.0.24/sparql-examples-utils-2.0.24-uber.jar"
+
+# Validate syntax, SHACL constraints, prefixes, and SERVICE annotations
+java -Xss8m -jar sparql-examples-utils.jar test --input-directory=examples/
+
+# Generate Markdown pages (with Mermaid diagrams), .rq files, and concatenated all.ttl
+java -Xss8m -jar sparql-examples-utils.jar convert -i examples/ -m
+java -Xss8m -jar sparql-examples-utils.jar convert -i examples/ -r
+java -Xss8m -jar sparql-examples-utils.jar convert -i examples/ -p all -f ttl > all.ttl
 ```
 
-### Compile all query files into one file to upload to your endpoint
-
-Compile all query files for a specific example folder, into a local file including the prefixes/namespaces definitions:
+## Local GitHub Pages preview
 
 ```bash
-java -jar sparql-examples-utils.jar convert -i examples/ -p Wikidata -f ttl > examples_Wikidata.ttl
-```
-
-> You can then load this file to this project SPARQL endpoint! We recommend to upload it to a named graph: your endpoint URL + `/.well-known/sparql-examples`
-
-Or compile for all example folders, as JSON-LD, to the standard output:
-
-```bash
-java -jar sparql-examples-utils.jar convert -i examples/ -p all -f jsonld
-```
-
-### Generate RQ files
-
-For easier use by other tools we can also generate [rq](https://www.w3.org/TR/2013/REC-sparql11-query-20130321/#mediaType) files. Following the syntax of [grlc](https://grlc.io/) allowing to use these queries as APIs.
-```bash
-java -jar sparql-examples-utils.jar convert -i examples/ -p all -r
-```
-
-### Generate markdown file
-
-Generate markdown files with the query and a mermaid diagram of the queries, to be used to deploy a static website for the query examples.
-
-```bash
-java -jar sparql-examples-utils.jar convert -i examples/ -m
-```
-
-### Testing the queries
-
-The queries are parsed and validated but not executed with junit using the Tester
-
-```bash
-java -jar sparql-examples-utils.jar test --input-directory=./examples
-```
-
-should return no test failures. RDF4j and Jena are both a lot stricter than virtuoso.
-
-The queries can be executed automatically on all endpoints they apply to using an extra argument `--also-run-slow-tests`:
-
-```bash
-java -jar sparql-examples-utils.jar test --input-directory=./examples/Wikidata --also-run-slow-tests
-```
-
-> This does change the queries to add a LIMIT 1 if no limit was set in the query. Then check if there is a result it is fetched.
-
-## Querying for queries
-
-As the SPARQL examples are themselves RDF, they can be queried for as soon as they are loaded in a SPARQL endpoint.
-```sparql
-PREFIX sh: <http://www.w3.org/ns/shacl#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX spex: <https://purl.expasy.org/sparql-examples/ontology#>
-
-SELECT DISTINCT ?sq ?comment ?query
-WHERE {
-    ?sq a sh:SPARQLExecutable ;
-        rdfs:comment ?comment ;
-        sh:select|sh:ask|sh:construct|spex:describe ?query .
-} ORDER BY ?sq
-```
-
-## Finding queries that run on more than one endpoint
-
-This expects the Jena tools to be available in your $PATH. e.g. `export PATH="$JENA_HOME/bin:$PATH"`
-
-```bash
-java -jar sparql-examples-utils.jar convert -i examples/ -p all -f ttl > examples_all.ttl
-
-sparql --data examples_all.ttl "SELECT ?query (GROUP_CONCAT(?target ; separator=', ') AS ?targets) WHERE { ?query <https://schema.org/target> ?target } GROUP BY ?query HAVING (COUNT(DISTINCT ?target) > 1) "
-```
-
-## How to cite this work
-
-If you reuse any part of this work, please cite [the GigaScience paper](https://academic.oup.com/gigascience/article/doi/10.1093/gigascience/giaf045/8133871):
-
-```
-@misc{largecollectionsparqlquestionquery,
-    author = {Bolleman, Jerven and Emonet, Vincent and Altenhoff, Adrian and Bairoch, Amos and Blatter, Marie-Claude and Bridge, Alan and Duvaud, Severine and Gasteiger, Elisabeth and Kuznetsov, Dmitry and Moretti, Sebastien and Michel, Pierre-Andre and Morgat, Anne and Pagni, Marco and Redaschi, Nicole and Zahn-Zabal, Monique and Mendes de Farias, Tarcisio and Sima, Ana Claudia},
-    doi = {10.1093/gigascience/giaf045},
-    month = {10},
-    title = {A large collection of bioinformatics question-query pairs over federated knowledge graphs: methodology and applications},
-    url = {https://github.com/sib-swiss/sparql-examples-utils},
-    year = {2025}
-}
-```
-
-## How to test github page rendering
-
-```sh
 docker build -t sparql-examples .
-docker run --rm  -v "$PWD":/srv/jekyll sparql-examples bundler exec jekyll build --watch &
+docker run --rm -v "$PWD":/srv/jekyll sparql-examples bundler exec jekyll build --watch &
 python3 -m http.server 8792 --directory _site
 ```
-Build a local docker image that has the right Jekyll version and use that to build the webpages.
-Then serve that with the python3 inbuild basic http server.
-Open a browser locally at `http://localhost:8792/` to see the rendered HTML
 
+Then open `http://localhost:8792/` in a browser.
+
+## License & acknowledgements
+
+* All SPARQL example queries under `examples/` are dedicated to the public domain under [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/).
+* Surrounding template, layout, and workflow code is licensed under the [MIT License](./LICENSE.md).
+
+This repository is based on the [SIB SPARQL Examples Template](https://github.com/sib-swiss/sparql-examples-template) and [SIB SPARQL Examples Utils](https://github.com/sib-swiss/sparql-examples-utils) developed by the [SIB Swiss Institute of Bioinformatics](https://www.sib.swiss/) (Bolleman *et al.*, *GigaScience*, 2025, DOI: [`10.1093/gigascience/giaf045`](https://doi.org/10.1093/gigascience/giaf045)).

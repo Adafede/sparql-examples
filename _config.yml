@@ -1,5 +1,10 @@
 markdown: GFM
 
 title: SPARQL examples
-description: A collection of SPARQL examples for YOUR_PROJECT
-# logo: /assets/images/logo.svg
+description: A collection of SPARQL query examples by Adriano Rutz
+
+exclude:
+  - "*.jar"
+  - Dockerfile
+  - Gemfile
+  - Gemfile.lock
