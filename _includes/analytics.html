@@ -1,1 +1,12 @@
-<script async defer src="https://scripts.simpleanalyticscdn.com/latest.js" crossorigin="anonymous"></script>
+{%- assign analytics_path = page.url | relative_url -%}
+<img
+  src="https://queue.simpleanalyticscdn.com/noscript.gif?hostname=adafede.github.io&amp;path={{ analytics_path | url_encode | replace: '+', '%20' }}"
+  alt=""
+  width="1"
+  height="1"
+  referrerpolicy="no-referrer-when-downgrade"
+  decoding="async"
+  fetchpriority="low"
+  aria-hidden="true"
+  class="analytics-pixel"
+/>
